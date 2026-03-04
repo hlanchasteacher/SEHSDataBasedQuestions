@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEHS Data Practice</title>
+    <title>SEHS Paper 1B Data Practice</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,7 +16,7 @@
             padding: 20px;
             line-height: 1.6;
         }
-        .question-container {
+        .dataset-container, .sub-question {
             background: #fff;
             padding: 20px;
             margin-bottom: 20px;
@@ -23,23 +25,29 @@
             display: none; /* Hidden by default */
         }
         .active {
-            display: block; /* Show active questions */
+            display: block; /* Show active sections */
         }
         .graph-placeholder {
             width: 100%;
             height: auto;
-            border: 1px solid #ccc;
+            border: 1px dashed #0056b3;
+            background-color: #e9ecef;
+            text-align: center;
+            padding: 40px 0;
             margin: 15px 0;
+            color: #0056b3;
+            font-weight: bold;
         }
         input[type="text"] {
-            padding: 10px;
-            width: 60%;
+            padding: 8px;
+            width: 50%;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
+            margin-top: 10px;
         }
         button {
-            padding: 10px 20px;
+            padding: 8px 16px;
             background-color: #0056b3;
             color: white;
             border: none;
@@ -47,6 +55,7 @@
             cursor: pointer;
             font-size: 16px;
             margin-left: 10px;
+            margin-top: 10px;
         }
         button:hover {
             background-color: #004494;
@@ -57,70 +66,116 @@
         }
         .success { color: green; }
         .error { color: red; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
 
-    <h1>SEHS Paper 1B: Data Analysis Practice</h1>
-    <p>Answer the question correctly to unlock the next section. Pay attention to units and significant figures!</p>
+    <h1>SEHS Paper 1B: Mock Data Analysis</h1>
+    <p>Answer each sub-question correctly to progress. Keep text answers to single key terms or acronyms for auto-grading. Pay attention to standard IB rounding rules.</p>
 
-    <div id="q1-container" class="question-container active">
-        <h2>Question 1: Blood Lactate and Exercise Intensity</h2>
-        <p>A sports scientist recorded the blood lactate concentration of a male cyclist during an incremental cycle ergometer test. The data was plotted on a graph showing power output (Watts) against blood lactate (mmol/L).</p>
+    <div id="dataset1" class="dataset-container active">
+        <h2>1. Caffeine Ingestion and Cycling Performance</h2>
+        <p>A meta-analysis investigated the efficacy of caffeine ingestion on time trial (TT) performance in cyclists. The researchers compared a placebo against low doses (1–3 \(mg \cdot kg^{-1}\)) and moderate doses (4–6 \(mg \cdot kg^{-1}\)) of caffeine. The table below represents simulated mean completion times for a 20 km time trial based on the study's findings.</p>
         
-        <img src="your-image-1.jpg" alt="Graph showing blood lactate curve" class="graph-placeholder">
+        <div class="graph-placeholder">[Insert Table/Graph of Caffeine Doses vs TT Time here]</div>
         
-        <p><strong>Question:</strong> Based on standard physiological thresholds, at approximately what blood lactate concentration (in mmol/L) does the Onset of Blood Lactate Accumulation (OBLA) typically occur? Enter just the number.</p>
-        
-        <input type="text" id="q1-answer" placeholder="Enter your answer...">
-        <button onclick="checkQ1()">Submit</button>
-        <div id="q1-feedback" class="feedback"></div>
+        <table>
+            <tr>
+                <th>Condition</th>
+                <th>Mean Completion Time (minutes)</th>
+            </tr>
+            <tr>
+                <td>Placebo</td>
+                <td>40.0</td>
+            </tr>
+            <tr>
+                <td>Low Dose (1-3 \(mg \cdot kg^{-1}\))</td>
+                <td>39.8</td>
+            </tr>
+            <tr>
+                <td>Moderate Dose (4-6 \(mg \cdot kg^{-1}\))</td>
+                <td>38.0</td>
+            </tr>
+        </table>
+
+        <div id="q1a" class="sub-question active">
+            <p><strong>(a)</strong> Calculate the percentage reduction in mean completion time when cyclists consumed a moderate dose of caffeine compared to the placebo. (Enter the number only)</p>
+            <input type="text" id="ans1a" placeholder="e.g. 2.5">
+            <button onclick="checkAnswer('ans1a', ['5', '5.0', '5%'], 'feedback1a', 'q1b')">Check Answer</button>
+            <div id="feedback1a" class="feedback"></div>
+        </div>
+
+        <div id="q1b" class="sub-question">
+            <p><strong>(b)</strong> Identify the specific central nervous system receptor that caffeine antagonizes, which helps reduce the athlete's rating of perceived exertion (RPE).</p>
+            <input type="text" id="ans1b" placeholder="Enter receptor name...">
+            <button onclick="checkAnswer('ans1b', ['adenosine', 'adenosine receptor', 'adenosine receptors'], 'feedback1b', 'dataset2')">Check Answer</button>
+            <div id="feedback1b" class="feedback"></div>
+        </div>
     </div>
 
-    <div id="q2-container" class="question-container">
-        <h2>Question 2: Biomechanics and Ground Reaction Force</h2>
-        <p>Excellent! Now analyze the next dataset.</p>
-        <p>A study compared the vertical ground reaction force (vGRF) of runners utilizing a heel-strike pattern versus a forefoot-strike pattern. The peak vGRF is measured in body weights (BW).</p>
+    <div id="dataset2" class="dataset-container">
+        <h2>2. Hypoxic Exposure and Hemoglobin Mass</h2>
+        <p>A study investigated the relationship between altitude training paradigms and changes in hemoglobin mass (Hbmass) and maximal oxygen uptake (\(VO_2max\)) in elite endurance athletes. The study compared athletes performing traditional "Live High-Train High" (LHTH) protocols versus simulated "Live High-Train Low" (LHTL) protocols.</p>
         
-        <img src="your-image-2.jpg" alt="Graph showing vertical ground reaction force over time" class="graph-placeholder">
-        
-        <p><strong>Question:</strong> A distinct "impact transient" peak is characteristic of which running footfall pattern? (Answer 'heel' or 'forefoot')</p>
-        
-        <input type="text" id="q2-answer" placeholder="Enter your answer...">
-        <button onclick="checkQ2()">Submit</button>
-        <div id="q2-feedback" class="feedback"></div>
+        <div class="graph-placeholder">[Insert Scatter Plot of Hbmass vs VO2max here]</div>
+
+        <div id="q2a" class="sub-question active">
+            <p><strong>(a)</strong> State the specific hormone, naturally stimulated by hypoxic environments, that signals the bone marrow to increase red blood cell production.</p>
+            <input type="text" id="ans2a" placeholder="Enter hormone name or acronym...">
+            <button onclick="checkAnswer('ans2a', ['epo', 'erythropoietin'], 'feedback2a', 'q2b')">Check Answer</button>
+            <div id="feedback2a" class="feedback"></div>
+        </div>
+
+        <div id="q2b" class="sub-question">
+            <p><strong>(b)</strong> An athlete's \(VO_2max\) increased from 60.0 \(ml \cdot kg^{-1} \cdot min^{-1}\) to 63.0 \(ml \cdot kg^{-1} \cdot min^{-1}\) after an LHTL protocol. Calculate the percentage increase in \(VO_2max\). (Enter the number only)</p>
+            <input type="text" id="ans2b" placeholder="e.g. 2.5">
+            <button onclick="checkAnswer('ans2b', ['5', '5.0', '5%'], 'feedback2b', 'success-message')">Check Answer</button>
+            <div id="feedback2b" class="feedback"></div>
+        </div>
+    </div>
+
+    <div id="success-message" class="dataset-container">
+        <h2 style="color: green;">🎉 Congratulations!</h2>
+        <p>You have successfully completed all the data analysis questions.</p>
     </div>
 
     <script>
-        // Check Question 1
-        function checkQ1() {
-            // The typical value for OBLA is 4 mmol/L
-            const ans = document.getElementById('q1-answer').value.trim();
-            const feedback = document.getElementById('q1-feedback');
+        function checkAnswer(inputId, correctAnswers, feedbackId, nextElementId) {
+            const userAnswer = document.getElementById(inputId).value.trim().toLowerCase();
+            const feedbackEl = document.getElementById(feedbackId);
             
-            if (ans === '4' || ans === '4.0') {
-                feedback.textContent = "Correct! OBLA typically occurs at 4.0 mmol/L.";
-                feedback.className = "feedback success";
-                // Unlock Question 2
-                document.getElementById('q2-container').classList.add('active');
-            } else {
-                feedback.textContent = "Incorrect. Think about the standard physiological threshold for OBLA.";
-                feedback.className = "feedback error";
-            }
-        }
+            // Check if user answer is in the array of acceptable answers
+            if (correctAnswers.includes(userAnswer)) {
+                feedbackEl.textContent = "Correct! Well done.";
+                feedbackEl.className = "feedback success";
+                
+                // Disable input and button to prevent multiple submissions
+                document.getElementById(inputId).disabled = true;
+                event.target.disabled = true;
 
-        // Check Question 2
-        function checkQ2() {
-            // Impact transient is typical of heel striking
-            const ans = document.getElementById('q2-answer').value.trim().toLowerCase();
-            const feedback = document.getElementById('q2-feedback');
-            
-            if (ans === 'heel' || ans === 'heel-strike' || ans === 'heel strike') {
-                feedback.textContent = "Correct! The impact transient spike is characteristic of heel striking due to the rapid deceleration of the foot and lower leg.";
-                feedback.className = "feedback success";
+                // Unlock the next section
+                const nextEl = document.getElementById(nextElementId);
+                if (nextEl) {
+                    nextEl.classList.add('active');
+                    // Smooth scroll to the newly unlocked element
+                    nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             } else {
-                feedback.textContent = "Incorrect. Review the biomechanical differences between the footfall patterns.";
-                feedback.className = "feedback error";
+                feedbackEl.textContent = "Incorrect. Please review the data and try again.";
+                feedbackEl.className = "feedback error";
             }
         }
     </script>
