@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,802 +7,479 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg: #f5f0e8;
-      --card: #fffdf8;
-      --ink: #1a1612;
-      --ink2: #4a4540;
-      --accent: #c1440e;
-      --accent2: #e8a020;
-      --green: #2d7a4f;
-      --red: #c1440e;
-      --border: #ddd5c5;
-      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+      --bg:#f5f0e8; --card:#fffdf8; --ink:#1a1612; --ink2:#4a4540;
+      --accent:#c1440e; --accent2:#e8a020; --green:#2d7a4f; --red:#c1440e;
+      --border:#ddd5c5; --shadow:0 2px 12px rgba(0,0,0,0.08);
     }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif;min-height:100vh;}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* HEADER */
+    header{background:var(--ink);color:#fffdf8;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:3px solid var(--accent);}
+    header .logo{font-family:"DM Serif Display",serif;font-size:1.4rem;letter-spacing:0.02em;}
+    header .logo span{color:var(--accent2);}
+    .lang-btn{background:transparent;border:1.5px solid #fffdf8;color:#fffdf8;padding:6px 18px;border-radius:20px;cursor:pointer;font-family:"DM Sans",sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:0.06em;transition:background 0.2s,color 0.2s;}
+    .lang-btn:hover{background:#fffdf8;color:var(--ink);}
 
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
-    }
+    /* TABS */
+    .tab-bar{display:flex;background:#e8e0d0;border-bottom:2px solid var(--border);overflow-x:auto;}
+    .tab{padding:12px 28px;cursor:pointer;font-size:0.88rem;font-weight:500;color:var(--ink2);border-right:1px solid var(--border);white-space:nowrap;transition:background 0.2s,color 0.2s;position:relative;}
+    .tab.active{background:var(--card);color:var(--accent);font-weight:600;}
+    .tab.active::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--accent);}
+    .tab .check-icon{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--green);margin-left:6px;vertical-align:middle;opacity:0;transition:opacity 0.3s;}
+    .tab.completed .check-icon{opacity:1;}
+    .tab.locked{opacity:0.45;cursor:not-allowed;}
 
-    /* ───── HEADER ───── */
-    header {
-      background: var(--ink);
-      color: #fffdf8;
-      padding: 18px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 3px solid var(--accent);
-    }
-    header .logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.02em;
-    }
-    header .logo span { color: var(--accent2); }
-    .lang-btn {
-      background: transparent;
-      border: 1.5px solid #fffdf8;
-      color: #fffdf8;
-      padding: 6px 18px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      transition: background 0.2s, color 0.2s;
-    }
-    .lang-btn:hover { background: #fffdf8; color: var(--ink); }
+    /* LAYOUT */
+    main{max-width:860px;margin:0 auto;padding:40px 20px 80px;}
+    .exercise-panel{display:none;}
+    .exercise-panel.active{display:block;}
 
-    /* ───── EXERCISE TABS ───── */
-    .tab-bar {
-      display: flex;
-      gap: 0;
-      background: #e8e0d0;
-      border-bottom: 2px solid var(--border);
-      overflow-x: auto;
-    }
-    .tab {
-      padding: 12px 28px;
-      cursor: pointer;
-      font-size: 0.88rem;
-      font-weight: 500;
-      color: var(--ink2);
-      border-right: 1px solid var(--border);
-      white-space: nowrap;
-      transition: background 0.2s, color 0.2s;
-      position: relative;
-    }
-    .tab.active {
-      background: var(--card);
-      color: var(--accent);
-      font-weight: 600;
-    }
-    .tab.active::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0; right: 0;
-      height: 2px;
-      background: var(--accent);
-    }
-    .tab .check-icon {
-      display: inline-block;
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: var(--green);
-      margin-left: 6px;
-      vertical-align: middle;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .tab.completed .check-icon { opacity: 1; }
-    .tab.locked { opacity: 0.45; cursor: not-allowed; }
+    /* INTRO CARD */
+    .exercise-intro{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:32px;box-shadow:var(--shadow);}
+    .exercise-intro h2{font-family:"DM Serif Display",serif;font-size:1.55rem;margin-bottom:14px;color:var(--accent);}
+    .exercise-intro p{line-height:1.7;color:var(--ink2);font-size:0.97rem;}
+    .exercise-intro ul{margin:10px 0 0 20px;color:var(--ink2);line-height:1.8;font-size:0.97rem;}
+    .exercise-intro img{max-width:100%;border-radius:8px;margin:16px 0;display:block;border:1px solid var(--border);}
+    .source-note{font-size:0.78rem;color:#888;font-style:italic;margin-top:8px;}
 
-    /* ───── MAIN LAYOUT ───── */
-    main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+    /* QUESTION CARD */
+    .question-card{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:22px;box-shadow:var(--shadow);transition:border-color 0.3s;}
+    .question-card.locked-q{opacity:0.5;pointer-events:none;}
+    .question-card.correct{border-color:var(--green);}
+    .question-card.wrong{border-color:var(--red);}
+    .q-label{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+    .q-marks{font-size:0.78rem;color:var(--ink2);font-weight:500;float:right;}
+    .q-text{font-size:1rem;line-height:1.7;color:var(--ink);margin-bottom:18px;font-style:italic;}
 
-    .exercise-panel { display: none; }
-    .exercise-panel.active { display: block; }
+    /* TEXT INPUT */
+    .text-input-wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+    .text-input-wrap input{flex:1;min-width:160px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:"DM Sans",sans-serif;font-size:0.97rem;background:#faf7f2;color:var(--ink);outline:none;transition:border-color 0.2s;}
+    .text-input-wrap input:focus{border-color:var(--accent2);}
 
-    /* ───── EXERCISE INTRO ───── */
-    .exercise-intro {
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 28px 32px;
-      margin-bottom: 32px;
-      box-shadow: var(--shadow);
-    }
-    .exercise-intro h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.55rem;
-      margin-bottom: 14px;
-      color: var(--accent);
-    }
-    .exercise-intro p {
-      line-height: 1.7;
-      color: var(--ink2);
-      font-size: 0.97rem;
-    }
-    .exercise-intro ul, .exercise-intro ol {
-      margin: 10px 0 0 20px;
-      color: var(--ink2);
-      line-height: 1.8;
-      font-size: 0.97rem;
-    }
+    /* MULTIPLE CHOICE */
+    .mc-options{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+    .mc-option{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:background 0.15s,border-color 0.15s;font-size:0.95rem;line-height:1.5;}
+    .mc-option:hover{background:#f0ebe0;border-color:var(--accent2);}
+    .mc-option.correct-opt{background:#e6f4ed;border-color:var(--green);color:var(--green);font-weight:600;}
+    .mc-option.wrong-opt{background:#fdecea;border-color:var(--red);color:var(--red);}
+    .mc-option input[type=radio]{accent-color:var(--accent);width:16px;height:16px;margin-top:3px;flex-shrink:0;}
 
-    .source-note {
-      font-size: 0.78rem;
-      color: #888;
-      font-style: italic;
-      margin-top: 8px;
-    }
+    /* BUTTONS */
+    .submit-btn{padding:10px 28px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:"DM Sans",sans-serif;font-size:0.92rem;font-weight:600;cursor:pointer;transition:background 0.2s,transform 0.1s;letter-spacing:0.04em;}
+    .submit-btn:hover{background:#a33000;transform:translateY(-1px);}
+    .submit-btn:active{transform:translateY(0);}
+    .submit-btn:disabled{background:#ccc;cursor:not-allowed;transform:none;}
 
-    /* ───── QUESTION CARD ───── */
-    .question-card {
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 28px 32px;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow);
-      transition: border-color 0.3s;
-    }
-    .question-card.locked-q {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-    .question-card.correct { border-color: var(--green); }
-    .question-card.wrong { border-color: var(--red); }
+    /* FEEDBACK */
+    .feedback{margin-top:14px;padding:12px 16px;border-radius:8px;font-size:0.92rem;line-height:1.6;display:none;}
+    .feedback.show{display:block;}
+    .feedback.ok{background:#e6f4ed;color:var(--green);border:1px solid #aadbc0;}
+    .feedback.err{background:#fdecea;color:var(--red);border:1px solid #f4b8b0;}
 
-    .q-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    .q-marks {
-      font-size: 0.78rem;
-      color: var(--ink2);
-      font-weight: 500;
-      float: right;
-    }
-    .q-text {
-      font-size: 1rem;
-      line-height: 1.7;
-      color: var(--ink);
-      margin-bottom: 18px;
-      font-style: italic;
-    }
+    /* COMPLETION BANNER */
+    .completion-banner{display:none;background:var(--green);color:#fff;border-radius:10px;padding:28px 32px;text-align:center;margin-top:32px;}
+    .completion-banner.show{display:block;}
+    .completion-banner h3{font-family:"DM Serif Display",serif;font-size:1.6rem;margin-bottom:8px;}
+    .completion-banner p{font-size:0.97rem;opacity:0.92;}
+    .completion-banner.clickable{cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;}
+    .completion-banner.clickable:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.2);}
+    .completion-banner .next-hint{font-size:0.82rem;margin-top:10px;opacity:0.85;letter-spacing:0.04em;}
 
-    /* Text input */
-    .text-input-wrap { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .text-input-wrap input {
-      flex: 1; min-width: 160px;
-      padding: 10px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.97rem;
-      background: #faf7f2;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .text-input-wrap input:focus { border-color: var(--accent2); }
+    @keyframes popIn{0%{transform:scale(0) rotate(-10deg);opacity:0;}100%{transform:scale(1) rotate(0deg);opacity:1;}}
 
-    /* Multiple choice */
-    .mc-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
-    .mc-option {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-      font-size: 0.95rem;
-    }
-    .mc-option:hover { background: #f0ebe0; border-color: var(--accent2); }
-    .mc-option.selected { background: #fef3e2; border-color: var(--accent2); }
-    .mc-option.correct-opt { background: #e6f4ed; border-color: var(--green); color: var(--green); font-weight: 600; }
-    .mc-option.wrong-opt { background: #fdecea; border-color: var(--red); color: var(--red); }
-    .mc-option input[type=radio] { accent-color: var(--accent); width: 16px; height: 16px; }
-
-    /* Submit btn */
-    .submit-btn {
-      padding: 10px 28px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      letter-spacing: 0.04em;
-    }
-    .submit-btn:hover { background: #a33000; transform: translateY(-1px); }
-    .submit-btn:active { transform: translateY(0); }
-    .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
-
-    /* Feedback */
-    .feedback {
-      margin-top: 14px;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-size: 0.92rem;
-      line-height: 1.6;
-      display: none;
-    }
-    .feedback.show { display: block; }
-    .feedback.ok { background: #e6f4ed; color: var(--green); border: 1px solid #aadbc0; }
-    .feedback.err { background: #fdecea; color: var(--red); border: 1px solid #f4b8b0; }
-    .feedback strong { font-weight: 700; }
-
-    /* ───── PROGRESS BAR ───── */
-    .progress-bar-wrap {
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .progress-bar-track {
-      flex: 1;
-      height: 6px;
-      background: #ddd5c5;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      background: var(--green);
-      border-radius: 4px;
-      transition: width 0.4s ease;
-      width: 0%;
-    }
-    .progress-label {
-      font-size: 0.8rem;
-      color: var(--ink2);
-      white-space: nowrap;
-    }
-
-    /* ───── COMPLETION ───── */
-    .completion-banner {
-      display: none;
-      background: var(--green);
-      color: #fff;
-      border-radius: 10px;
-      padding: 28px 32px;
-      text-align: center;
-      margin-top: 32px;
-    }
-    .completion-banner.show { display: block; }
-    .completion-banner.clickable { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
-    .completion-banner.clickable:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
-    .completion-banner .next-hint { font-size:0.82rem; margin-top:10px; opacity:0.8; letter-spacing:0.04em; }
-    .completion-banner h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.6rem;
-      margin-bottom: 8px;
-    }
-    .completion-banner p { font-size: 0.97rem; opacity: 0.92; }
-
-    @keyframes popIn {
-      0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
-      100% { transform: scale(1) rotate(0deg);   opacity: 1; }
-    }
-
-    /* ───── RESPONSIVE ───── */
-    @media (max-width: 600px) {
-      .exercise-intro, .question-card { padding: 20px 16px; }
-      header { padding: 14px 16px; }
-      header .logo { font-size: 1.1rem; }
-      main { padding: 24px 12px 60px; }
+    @media(max-width:600px){
+      .exercise-intro,.question-card{padding:20px 16px;}
+      header{padding:14px 16px;}
+      header .logo{font-size:1.1rem;}
+      main{padding:24px 12px 60px;}
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">SEHS <span>·</span> <span id="header-title">Data Based Questions</span></div>
+  <div class="logo">SEHS <span>&middot;</span> <span id="header-title">Data Based Questions</span></div>
   <button class="lang-btn" id="langToggle" onclick="toggleLang()">ES</button>
 </header>
 
-<div class="tab-bar" id="tabBar">
-  <div class="tab active" onclick="goToExercise(0)" id="tab0">
-    <span class="tab-label" data-en="Exercise 1" data-es="Ejercicio 1">Exercise 1</span>
-    <span class="check-icon">✓</span>
-  </div>
-  <div class="tab locked" onclick="goToExercise(1)" id="tab1">
-    <span class="tab-label" data-en="Exercise 2" data-es="Ejercicio 2">Exercise 2</span>
-    <span class="check-icon">✓</span>
-  </div>
-  <div class="tab locked" onclick="goToExercise(2)" id="tab2">
-    <span class="tab-label" data-en="Exercise 3" data-es="Ejercicio 3">Exercise 3</span>
-    <span class="check-icon">✓</span>
-  </div>
-  <div class="tab locked" onclick="goToExercise(3)" id="tab3">
-    <span class="tab-label" data-en="Exercise 4" data-es="Ejercicio 4">Exercise 4</span>
-    <span class="check-icon">✓</span>
-  </div>
+<div class="tab-bar">
+  <div class="tab active" onclick="goToExercise(0)" id="tab0"><span class="tab-label" data-en="Exercise 1" data-es="Ejercicio 1">Exercise 1</span><span class="check-icon">&#10003;</span></div>
+  <div class="tab locked"  onclick="goToExercise(1)" id="tab1"><span class="tab-label" data-en="Exercise 2" data-es="Ejercicio 2">Exercise 2</span><span class="check-icon">&#10003;</span></div>
+  <div class="tab locked"  onclick="goToExercise(2)" id="tab2"><span class="tab-label" data-en="Exercise 3" data-es="Ejercicio 3">Exercise 3</span><span class="check-icon">&#10003;</span></div>
+  <div class="tab locked"  onclick="goToExercise(3)" id="tab3"><span class="tab-label" data-en="Exercise 4" data-es="Ejercicio 4">Exercise 4</span><span class="check-icon">&#10003;</span></div>
 </div>
 
 <main>
 
-  <!-- ===================== EXERCISE 1 ===================== -->
-  <div class="exercise-panel active" id="panel0">
-
-    <div class="exercise-intro">
-      <h2 data-en="Exercise 1 – Standing Broad Jump" data-es="Ejercicio 1 – Salto de longitud en parado">Exercise 1 – Standing Broad Jump</h2>
-      <p data-en="A study examined physical fitness levels of 10-year-old children who regularly participate in sports. The 900 participants were divided evenly between three groups according to their training level:"
-         data-es="Un estudio examinó los niveles de condición física de niños de 10 años que participan regularmente en deportes. Los 900 participantes se dividieron en tres grupos según su nivel de entrenamiento:">
-        A study examined physical fitness levels of 10-year-old children who regularly participate in sports. The 900 participants were divided evenly between three groups according to their training level:
-      </p>
-      <ul>
-        <li data-en="Low: training less than 1 hour per week" data-es="Bajo: menos de 1 hora por semana">Low: training less than 1 hour per week</li>
-        <li data-en="Moderate: training between 1 and 5 hours per week" data-es="Moderado: entre 1 y 5 horas por semana">Moderate: training between 1 and 5 hours per week</li>
-        <li data-en="High: training more than 5 hours per week" data-es="Alto: más de 5 horas por semana">High: training more than 5 hours per week</li>
-      </ul>
-      <p style="margin-top:12px" data-en="Each participant performed the standing broad jump fitness test. The mean results are shown in the graph." data-es="Cada participante realizó la prueba de salto de longitud en parado. Los resultados medios se muestran en el gráfico.">
-        Each participant performed the standing broad jump fitness test. The mean results are shown in the graph.
-      </p>
-      <img src="images/image1.png" alt="Graph: Mean Standing Broad Jump results by sport and training level" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
-      <p class="source-note">Source: © International Baccalaureate Organization 2018</p>
-    </div>
-
-    <!-- Q1 a.i -->
-    <div class="question-card" id="q0_0">
-      <div class="q-label">a.i <span class="q-marks">[1]</span></div>
-      <div class="q-text" data-en="Identify the training level and sport for the group that has the highest mean score on the standing broad jump fitness test."
-           data-es="Identifica el nivel de entrenamiento y el deporte del grupo que obtuvo la puntuación media más alta en la prueba de salto de longitud.">
-        Identify the training level and sport for the group that has the highest mean score on the standing broad jump fitness test.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q0_0" value="A"> <span data-en="High training level – Track and field athletes" data-es="Alto – Atletismo">High training level – Track and field athletes</span></label>
-        <label class="mc-option"><input type="radio" name="q0_0" value="B"> <span data-en="Moderate training level – Gymnasts" data-es="Moderado – Gimnastas">Moderate training level – Gymnasts</span></label>
-        <label class="mc-option"><input type="radio" name="q0_0" value="C"> <span data-en="High training level – Martial artists" data-es="Alto – Artes marciales">High training level – Martial artists</span></label>
-        <label class="mc-option"><input type="radio" name="q0_0" value="D"> <span data-en="High training level – Gymnasts" data-es="Alto – Gimnastas">High training level – Gymnasts</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q0_0','D','ex1_q0')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q0_0"></div>
-    </div>
-
-    <!-- Q1 a.ii -->
-    <div class="question-card locked-q" id="q0_1">
-      <div class="q-label">a.ii <span class="q-marks">[2]</span></div>
-      <div class="q-text" data-en="Calculate the difference of mean standing broad jump fitness test score between moderate and high training levels for the group stated in 1(a)(i). Give your answer in cm."
-           data-es="Calcula la diferencia de la puntuación media del salto de longitud entre los niveles de entrenamiento moderado y alto para el grupo indicado en 1(a)(i). Da tu respuesta en cm.">
-        Calculate the difference of mean standing broad jump fitness test score between moderate and high training levels for the group stated in 1(a)(i). Give your answer in cm.
-      </div>
-      <div class="text-input-wrap">
-        <input type="number" id="inp_q0_1" placeholder="e.g. 42" step="0.1"/>
-        <button class="submit-btn" onclick="checkNumeric('q0_1', [19,21], 'ex1_q1')">
-          <span data-en="Submit" data-es="Enviar">Submit</span>
-        </button>
-      </div>
-      <div class="feedback" id="fb_q0_1"></div>
-    </div>
-
-    <!-- Q1 a.iii -->
-    <div class="question-card locked-q" id="q0_2">
-      <div class="q-label">a.iii <span class="q-marks">[2]</span></div>
-      <div class="q-text" data-en="Using the data, deduce the effect of high level of participation in sport on performance in the standing broad jump test."
-           data-es="Usando los datos, deduce el efecto de la alta participación deportiva en el rendimiento en la prueba de salto de longitud.">
-        Using the data, deduce the effect of high level of participation in sport on performance in the standing broad jump test.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q0_2" value="A">
-          <span data-en="High training leads to better jump scores only in gymnasts and track athletes; other sports show no clear trend across training levels" data-es="El entrenamiento alto solo mejora el salto en gimnastas y atletismo; otros deportes no muestran tendencia clara entre niveles de entrenamiento">High training leads to better jump scores only in gymnasts and track athletes; other sports show no clear trend across training levels</span></label>
-        <label class="mc-option"><input type="radio" name="q0_2" value="B">
-          <span data-en="Children who regularly participate in sport perform better; gymnasts outperform other sports across all training levels; and higher training (&gt;5 h/week) leads to greater standing broad jump performance in every sport" data-es="Los niños que participan regularmente en deporte rinden mejor; los gimnastas superan a otros deportes en todos los niveles de entrenamiento; y un mayor entrenamiento (&gt;5 h/semana) conduce a un mayor rendimiento en el salto de longitud en todos los deportes">Children who regularly participate in sport perform better; gymnasts outperform other sports across all training levels; and higher training (&gt;5 h/week) leads to greater standing broad jump performance in every sport</span></label>
-        <label class="mc-option"><input type="radio" name="q0_2" value="C">
-          <span data-en="Moderate training (&gt;1 h/week) appears sufficient to maximise performance; increasing to high training adds little further benefit across most sports" data-es="El entrenamiento moderado (&gt;1 h/semana) parece suficiente para maximizar el rendimiento; aumentar al nivel alto aporta poco beneficio adicional en la mayoría de deportes">Moderate training (&gt;1 h/week) appears sufficient to maximise performance; increasing to high training adds little further benefit across most sports</span></label>
-        <label class="mc-option"><input type="radio" name="q0_2" value="D">
-          <span data-en="High training consistently improves jump performance in team sports, but shows a negative effect in individual sports such as gymnastics and swimming" data-es="El entrenamiento alto mejora consistentemente el salto en deportes de equipo, pero muestra un efecto negativo en deportes individuales como la gimnasia y la natación">High training consistently improves jump performance in team sports, but shows a negative effect in individual sports such as gymnastics and swimming</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q0_2','B','ex1_q2')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q0_2"></div>
-    </div>
-
-    <!-- Q1 a.iii (t-test) -->
-    <div class="question-card locked-q" id="q0_3">
-      <div class="q-label">a.iii <span class="q-marks">[3]</span></div>
-      <div class="q-text" data-en="A two-tailed, unpaired t-test was conducted. Results: low vs moderate: p > 0.05; moderate vs high: p < 0.05; low vs high: p < 0.01. Comment on the meaning of the results from the t-test."
-           data-es="Se realizó una prueba t bilateral no pareada. Resultados: bajo vs moderado: p > 0.05; moderado vs alto: p < 0.05; bajo vs alto: p < 0.01. Comenta el significado de los resultados.">
-        A two-tailed, unpaired t-test was conducted. Results: low vs moderate: p &gt; 0.05; moderate vs high: p &lt; 0.05; low vs high: p &lt; 0.01. Comment on the meaning of the results from the t-test.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q0_3" value="A">
-          <span data-en="All three comparisons are statistically significant (p &lt; 0.05), confirming that each increase in training level produces a meaningfully different jump score" data-es="Las tres comparaciones son estadísticamente significativas (p &lt; 0.05), confirmando que cada aumento en el nivel de entrenamiento produce una puntuación de salto significativamente diferente">All three comparisons are statistically significant (p &lt; 0.05), confirming that each increase in training level produces a meaningfully different jump score</span></label>
-        <label class="mc-option"><input type="radio" name="q0_3" value="B">
-          <span data-en="Low vs moderate: not significant (p &gt; 0.05), so no meaningful difference between these groups. Moderate vs high: significant (p &lt; 0.05), so these groups are significantly different. Low vs high: extremely significant (p &lt; 0.01), showing the greatest difference between training extremes" data-es="Bajo vs moderado: no significativo (p &gt; 0.05), sin diferencia significativa entre estos grupos. Moderado vs alto: significativo (p &lt; 0.05). Bajo vs alto: extremadamente significativo (p &lt; 0.01), la mayor diferencia entre los extremos de entrenamiento">Low vs moderate: not significant (p &gt; 0.05), so no meaningful difference between these groups. Moderate vs high: significant (p &lt; 0.05), so these groups are significantly different. Low vs high: extremely significant (p &lt; 0.01), showing the greatest difference between training extremes</span></label>
-        <label class="mc-option"><input type="radio" name="q0_3" value="C">
-          <span data-en="Low vs moderate: significant (p &lt; 0.05), indicating even small increases in training matter. Moderate vs high: not significant (p &gt; 0.05), suggesting diminishing returns at higher training levels. Low vs high: significant (p &lt; 0.01)" data-es="Bajo vs moderado: significativo (p &lt; 0.05), indicando que incluso pequeños aumentos en el entrenamiento importan. Moderado vs alto: no significativo (p &gt; 0.05), sugiriendo rendimientos decrecientes a niveles altos. Bajo vs alto: significativo (p &lt; 0.01)">Low vs moderate: significant (p &lt; 0.05), indicating even small increases in training matter. Moderate vs high: not significant (p &gt; 0.05), suggesting diminishing returns at higher training levels. Low vs high: significant (p &lt; 0.01)</span></label>
-        <label class="mc-option"><input type="radio" name="q0_3" value="D">
-          <span data-en="All three comparisons are non-significant (p &gt; 0.05), meaning the observed differences in jump scores are likely due to chance rather than training level" data-es="Las tres comparaciones son no significativas (p &gt; 0.05), lo que significa que las diferencias observadas en el salto probablemente se deben al azar más que al nivel de entrenamiento">All three comparisons are non-significant (p &gt; 0.05), meaning the observed differences in jump scores are likely due to chance rather than training level</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q0_3','B','ex1_q3')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q0_3"></div>
-    </div>
-
-    <div class="completion-banner clickable" id="comp0" onclick="goToExercise(1)">
-      <h3 data-en="🎉 Exercise 1 Complete!" data-es="🎉 ¡Ejercicio 1 Completado!">🎉 Exercise 1 Complete!</h3>
-      <p data-en="Well done! Exercise 2 is now unlocked." data-es="¡Muy bien! El Ejercicio 2 ya está desbloqueado.">Well done! Exercise 2 is now unlocked.</p>
-      <p class="next-hint" data-en="👉 Click here to go to Exercise 2" data-es="👉 Haz clic aquí para ir al Ejercicio 2">👉 Click here to go to Exercise 2</p>
-    </div>
+<!-- ═══════════════════════════════════════════════════════════ EXERCISE 1 -->
+<div class="exercise-panel active" id="panel0">
+  <div class="exercise-intro">
+    <h2 data-en="Exercise 1 – Standing Broad Jump" data-es="Ejercicio 1 – Salto de longitud en parado">Exercise 1 – Standing Broad Jump</h2>
+    <p data-en="A study examined physical fitness levels of 10-year-old children who regularly participate in sports. The 900 participants were divided evenly between three groups according to their training level:" data-es="Un estudio examinó los niveles de condición física de niños de 10 años que participan regularmente en deportes. Los 900 participantes se dividieron en tres grupos según su nivel de entrenamiento:">A study examined physical fitness levels of 10-year-old children who regularly participate in sports. The 900 participants were divided evenly between three groups according to their training level:</p>
+    <ul>
+      <li data-en="Low: training less than 1 hour per week" data-es="Bajo: menos de 1 hora por semana">Low: training less than 1 hour per week</li>
+      <li data-en="Moderate: training between 1 and 5 hours per week" data-es="Moderado: entre 1 y 5 horas por semana">Moderate: training between 1 and 5 hours per week</li>
+      <li data-en="High: training more than 5 hours per week" data-es="Alto: más de 5 horas por semana">High: training more than 5 hours per week</li>
+    </ul>
+    <p style="margin-top:12px" data-en="Each participant performed the standing broad jump fitness test. The mean results are shown in the graph." data-es="Cada participante realizó la prueba de salto de longitud en parado. Los resultados medios se muestran en el gráfico.">Each participant performed the standing broad jump fitness test. The mean results are shown in the graph.</p>
+    <img src="images/image1.png" alt="Graph: Mean Standing Broad Jump results"/>
+    <p class="source-note">Source: &copy; International Baccalaureate Organization 2018</p>
   </div>
 
-  <!-- ===================== EXERCISE 2 ===================== -->
-  <div class="exercise-panel" id="panel1">
-
-    <div class="exercise-intro">
-      <h2 data-en="Exercise 2 – Rugby Tackle Impact Force" data-es="Ejercicio 2 – Fuerza de impacto en el tackle de rugby">Exercise 2 – Rugby Tackle Impact Force</h2>
-      <p data-en="A study investigated the magnitude of the impact force (N) at the shoulder during tackling in 35 experienced rugby union players. The researchers examined:"
-         data-es="Un estudio investigó la magnitud de la fuerza de impacto (N) en el hombro durante el placaje en 35 jugadores experimentados de rugby union. Los investigadores examinaron:">
-        A study investigated the magnitude of the impact force (N) at the shoulder during tackling in 35 experienced rugby union players. The researchers examined:
-      </p>
-      <ul>
-        <li data-en="Condition 1: Shoulder pads (with and without)" data-es="Condición 1: Hombreras (con y sin)">Condition 1: Shoulder pads (with and without)</li>
-        <li data-en="Condition 2: Shoulder (dominant vs non-dominant)" data-es="Condición 2: Hombro (dominante vs no dominante)">Condition 2: Shoulder (dominant vs non-dominant)</li>
-        <li data-en="Condition 3: Setting (laboratory vs rugby field)" data-es="Condición 3: Entorno (laboratorio vs campo de rugby)">Condition 3: Setting (laboratory vs rugby field)</li>
-      </ul>
-
-      <img src="images/image2.png" alt="Photo: Rugby tackle action" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
-
-      <p data-en="Table 1 shows the mean maximum impact force (N) and standard deviation for Conditions 1 and 2." data-es="La Tabla 1 muestra la fuerza de impacto máxima media (N) y desviación estándar para las Condiciones 1 y 2.">Table 1 shows the mean maximum impact force (N) and standard deviation for Conditions 1 and 2.</p>
-      <img src="images/image3.png" alt="Table 1: Mean impact force by shoulder and padding condition" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
-
-      <p data-en="Table 2 shows the mean maximum impact force for trials conducted in the laboratory and on the field (Condition 3)." data-es="La Tabla 2 muestra la fuerza de impacto máxima media para las pruebas en laboratorio y en campo (Condición 3).">Table 2 shows the mean maximum impact force for trials conducted in the laboratory and on the field (Condition 3).</p>
-      <img src="images/image4.png" alt="Table 2: Mean impact force – laboratory vs field" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
-
-      <p data-en="A recent study tested the effect on impact force (N) of adding a soft-covering cap to a helmet when dropped from a set height. The graph shows results for helmets A, B, and C." data-es="Un estudio reciente probó el efecto en la fuerza de impacto (N) de añadir una cubierta blanda a un casco al caer desde una altura fija. El gráfico muestra los resultados para los cascos A, B y C.">A recent study tested the effect on impact force (N) of adding a soft-covering cap to a helmet when dropped from a set height. The graph shows results for helmets A, B, and C.</p>
-      <img src="images/image5.png" alt="Graph: Impact force for helmets A, B, C with and without soft cap" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
-      <p class="source-note">Source: Usman et al., Journal of Science and Medicine in Sport, 2011</p>
+  <!-- Q1 a.i -->
+  <div class="question-card" id="q0_0">
+    <div class="q-label">a.i <span class="q-marks">[1]</span></div>
+    <div class="q-text" data-en="Identify the training level and sport for the group that has the highest mean score on the standing broad jump fitness test." data-es="Identifica el nivel de entrenamiento y el deporte del grupo que obtuvo la puntuación media más alta en la prueba de salto de longitud.">Identify the training level and sport for the group that has the highest mean score on the standing broad jump fitness test.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q0_0" value="A">
+        <span data-en="High training level – Track and field athletes, with a mean score approximately 5 cm above the next highest group" data-es="Alto – Atletismo, con una puntuación media aproximadamente 5 cm por encima del siguiente grupo más alto">High training level – Track and field athletes, with a mean score approximately 5 cm above the next highest group</span></label>
+      <label class="mc-option"><input type="radio" name="q0_0" value="B">
+        <span data-en="Moderate training level – Gymnasts, as gymnastic training requires explosive leg power directly relevant to the standing broad jump" data-es="Moderado – Gimnastas, ya que el entrenamiento de gimnasia requiere potencia explosiva de piernas directamente relevante para el salto de longitud">Moderate training level – Gymnasts, as gymnastic training requires explosive leg power directly relevant to the standing broad jump</span></label>
+      <label class="mc-option"><input type="radio" name="q0_0" value="C">
+        <span data-en="High training level – Martial artists, whose lower body conditioning from high training produces the greatest jump distances across all sports" data-es="Alto – Artes marciales, cuyo acondicionamiento del tren inferior por el entrenamiento alto produce las mayores distancias de salto en todos los deportes">High training level – Martial artists, whose lower body conditioning from high training produces the greatest jump distances across all sports</span></label>
+      <label class="mc-option"><input type="radio" name="q0_0" value="D">
+        <span data-en="High training level – Gymnasts, who recorded the highest mean standing broad jump score of all groups" data-es="Alto – Gimnastas, que registraron la mayor puntuación media de salto de longitud en parado de todos los grupos">High training level – Gymnasts, who recorded the highest mean standing broad jump score of all groups</span></label>
     </div>
-
-    <!-- Q2 a.i -->
-    <div class="question-card" id="q1_0">
-      <div class="q-label">a.i <span class="q-marks">[1]</span></div>
-      <div class="q-text" data-en="Identify which shoulder has the greatest mean impact force."
-           data-es="Identifica qué hombro tiene la mayor fuerza de impacto media.">
-        Identify which shoulder has the greatest mean impact force.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q1_0" value="A"> <span data-en="Non-dominant shoulder, with a mean force approximately 75 N greater than the dominant shoulder" data-es="Hombro no dominante, con una fuerza media aproximadamente 75 N mayor que el dominante">Non-dominant shoulder, with a mean force approximately 75 N greater than the dominant shoulder</span></label>
-        <label class="mc-option"><input type="radio" name="q1_0" value="B"> <span data-en="Dominant shoulder, with a greater mean impact force than the non-dominant shoulder in both padding conditions" data-es="Hombro dominante, con una fuerza de impacto media mayor que el no dominante en ambas condiciones de hombrera">Dominant shoulder, with a greater mean impact force than the non-dominant shoulder in both padding conditions</span></label>
-        <label class="mc-option"><input type="radio" name="q1_0" value="C"> <span data-en="Both shoulders show identical mean impact forces regardless of padding condition" data-es="Ambos hombros muestran fuerzas de impacto medias idénticas independientemente de la condición de hombrera">Both shoulders show identical mean impact forces regardless of padding condition</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q1_0','B','ex2_q0')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q1_0"></div>
-    </div>
-
-    <!-- Q2 a.ii -->
-    <div class="question-card locked-q" id="q1_1">
-      <div class="q-label">a.ii <span class="q-marks">[2]</span></div>
-      <div class="q-text" data-en="Calculate the difference, in Newtons, between mean maximum impact force for dominant and non-dominant shoulders for players wearing pads."
-           data-es="Calcula la diferencia, en Newtons, entre la fuerza de impacto máxima media para el hombro dominante y no dominante de los jugadores que usan hombreras.">
-        Calculate the difference, in Newtons, between mean maximum impact force for dominant and non-dominant shoulders for players wearing pads.
-      </div>
-      <div class="text-input-wrap">
-        <input type="number" id="inp_q1_1" placeholder="e.g. 42" step="0.1"/>
-        <button class="submit-btn" onclick="checkNumeric('q1_1', [123, 125], 'ex2_q1')">
-          <span data-en="Submit" data-es="Enviar">Submit</span>
-        </button>
-      </div>
-      <div class="feedback" id="fb_q1_1"></div>
-    </div>
-
-    <!-- Q2 a.iii -->
-    <div class="question-card locked-q" id="q1_2">
-      <div class="q-label">a.iii <span class="q-marks">[2]</span></div>
-      <div class="q-text" data-en="Using the data, discuss the hypothesis that wearing padding could reduce the incidence of injuries to the tackler in rugby union."
-           data-es="Usando los datos, discute la hipótesis de que usar hombreras podría reducir la incidencia de lesiones en el placador de rugby union.">
-        Using the data, discuss the hypothesis that wearing padding could reduce the incidence of injuries to the tackler in rugby union.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q1_2" value="A">
-          <span data-en="The data does not support the hypothesis; the reduction in force with padding is within the standard deviation range, suggesting the difference may not be meaningful" data-es="Los datos no apoyan la hipótesis; la reducción de fuerza con hombreras está dentro del rango de desviación estándar, lo que sugiere que la diferencia puede no ser significativa">The data does not support the hypothesis; the reduction in force with padding is within the standard deviation range, suggesting the difference may not be meaningful</span></label>
-        <label class="mc-option"><input type="radio" name="q1_2" value="B">
-          <span data-en="Padding reduces mean impact force for both shoulders, supporting the hypothesis that padding lowers injury risk; however, force is still high so injury is not eliminated" data-es="Las hombreras reducen la fuerza de impacto media en ambos hombros, apoyando la hipótesis de que las hombreras reducen el riesgo de lesiones; sin embargo, la fuerza sigue siendo alta por lo que no se elimina la lesión">Padding reduces mean impact force for both shoulders, supporting the hypothesis that padding lowers injury risk; however, force is still high so injury is not eliminated</span></label>
-        <label class="mc-option"><input type="radio" name="q1_2" value="C">
-          <span data-en="Padding increases impact force on the dominant shoulder while reducing it on the non-dominant shoulder, so the overall effect on injury incidence is unclear" data-es="Las hombreras aumentan la fuerza de impacto en el hombro dominante mientras la reducen en el no dominante, por lo que el efecto global sobre la incidencia de lesiones no está claro">Padding increases impact force on the dominant shoulder while reducing it on the non-dominant shoulder, so the overall effect on injury incidence is unclear</span></label>
-        <label class="mc-option"><input type="radio" name="q1_2" value="D">
-          <span data-en="Padding reduces impact force significantly for both shoulders, fully supporting the hypothesis and suggesting padding eliminates injury risk in rugby tackles" data-es="Las hombreras reducen la fuerza de impacto significativamente en ambos hombros, apoyando plenamente la hipótesis y sugiriendo que las hombreras eliminan el riesgo de lesiones en los placajes">Padding reduces impact force significantly for both shoulders, fully supporting the hypothesis and suggesting padding eliminates injury risk in rugby tackles</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q1_2','B','ex2_q2')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q1_2"></div>
-    </div>
-
-    <!-- Q2 c/d (helmet) -->
-    <div class="question-card locked-q" id="q1_3">
-      <div class="q-label">c <span class="q-marks">[1]</span></div>
-      <div class="q-text" data-en="Identify the brand of helmet that demonstrated the lowest mean impact force."
-           data-es="Identifica la marca de casco que mostró la menor fuerza de impacto media.">
-        Identify the brand of helmet that demonstrated the lowest mean impact force.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q1_3" value="A"> <span data-en="Helmet A, with a mean impact force of approximately 65 N without the cap" data-es="Casco A, con una fuerza de impacto media de aproximadamente 65 N sin cubierta">Helmet A, with a mean impact force of approximately 65 N without the cap</span></label>
-        <label class="mc-option"><input type="radio" name="q1_3" value="B"> <span data-en="Helmet B, which showed the most consistent force reduction when the soft cap was added" data-es="Casco B, que mostró la reducción de fuerza más consistente al añadir la cubierta blanda">Helmet B, which showed the most consistent force reduction when the soft cap was added</span></label>
-        <label class="mc-option"><input type="radio" name="q1_3" value="C"> <span data-en="Helmet C, which had the lowest mean force when the soft-covering cap was fitted" data-es="Casco C, que tuvo la menor fuerza media cuando se colocó la cubierta blanda">Helmet C, which had the lowest mean force when the soft-covering cap was fitted</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q1_3','A','ex2_q3')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q1_3"></div>
-    </div>
-
-    <div class="completion-banner clickable" id="comp1" onclick="goToExercise(2)">
-      <h3 data-en="🎉 Exercise 2 Complete!" data-es="🎉 ¡Ejercicio 2 Completado!">🎉 Exercise 2 Complete!</h3>
-      <p data-en="Excellent work! Exercise 3 is now unlocked." data-es="¡Excelente trabajo! El Ejercicio 3 ya está desbloqueado.">Excellent work! Exercise 3 is now unlocked.</p>
-      <p class="next-hint" data-en="👉 Click here to go to Exercise 3" data-es="👉 Haz clic aquí para ir al Ejercicio 3">👉 Click here to go to Exercise 3</p>
-    </div>
+    <button class="submit-btn" onclick="checkMC('q0_0','D','ex1_q0')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q0_0"></div>
   </div>
 
-  <!-- ===================== EXERCISE 3 ===================== -->
-  <div class="exercise-panel" id="panel2">
-
-    <div class="exercise-intro">
-      <h2 data-en="Exercise 3 – Field Hockey Practice Groups" data-es="Ejercicio 3 – Grupos de práctica de hockey hierba">Exercise 3 – Field Hockey Practice Groups</h2>
-      <p data-en="A study investigated the effect of practice on improvement of four field hockey skills. Participants engaged in pre-test and post-test competitions before and after a six-week training programme. During the training programme, participants were randomly allocated to one of three practice groups:"
-         data-es="Un estudio investigó el efecto de la práctica en la mejora de cuatro habilidades de hockey hierba. Los participantes realizaron competiciones de pretest y postest antes y después de un programa de entrenamiento de seis semanas. Se asignaron aleatoriamente a uno de tres grupos:">
-        A study investigated the effect of practice on improvement of four field hockey skills. Participants engaged in pre-test and post-test competitions before and after a six-week training programme. During the training programme, participants were randomly allocated to one of three practice groups:
-      </p>
-      <ul>
-        <li data-en="Fixed" data-es="Fijo">Fixed</li>
-        <li data-en="Variable" data-es="Variable">Variable</li>
-        <li data-en="Game-based" data-es="Basado en el juego">Game-based</li>
-      </ul>
-      <p style="margin-top:12px" data-en="Results for successful performance of each skill during competitions are shown in the table (* p < 0.05)." data-es="Los resultados para la ejecución exitosa de cada habilidad durante las competiciones se muestran en la tabla (* p < 0.05).">Results for successful performance of each skill during competitions are shown in the table (* p &lt; 0.05).</p>
-      <img src="images/image6.png" alt="Table: Mean percentage successful performance by practice group and skill" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
+  <!-- Q1 a.ii -->
+  <div class="question-card locked-q" id="q0_1">
+    <div class="q-label">a.ii <span class="q-marks">[2]</span></div>
+    <div class="q-text" data-en="Calculate the difference of mean standing broad jump fitness test score between moderate and high training levels for the group stated in 1(a)(i). Give your answer in cm." data-es="Calcula la diferencia de la puntuación media del salto de longitud entre los niveles de entrenamiento moderado y alto para el grupo indicado en 1(a)(i). Da tu respuesta en cm.">Calculate the difference of mean standing broad jump fitness test score between moderate and high training levels for the group stated in 1(a)(i). Give your answer in cm.</div>
+    <div class="text-input-wrap">
+      <input type="number" id="inp_q0_1" placeholder="e.g. 42" step="0.1"/>
+      <button class="submit-btn" onclick="checkNumeric('q0_1',[19,21],'ex1_q1')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
     </div>
-
-    <!-- Q3 a.i -->
-    <div class="question-card" id="q2_0">
-      <div class="q-label">a.i <span class="q-marks">[1]</span></div>
-      <div class="q-text" data-en="State the mean percentage for successful passing by the fixed practice group in the pre-test competition."
-           data-es="Indica el porcentaje medio de pases exitosos del grupo de práctica fija en la competición pretest.">
-        State the mean percentage for successful passing by the fixed practice group in the pre-test competition.
-      </div>
-      <div class="text-input-wrap">
-        <input type="number" id="inp_q2_0" placeholder="e.g. 42" step="0.1"/>
-        <button class="submit-btn" onclick="checkNumeric('q2_0', [67.5, 68.5], 'ex3_q0')">
-          <span data-en="Submit" data-es="Enviar">Submit</span>
-        </button>
-      </div>
-      <div class="feedback" id="fb_q2_0"></div>
-    </div>
-
-    <!-- Q3 a.ii -->
-    <div class="question-card locked-q" id="q2_1">
-      <div class="q-label">a.ii <span class="q-marks">[1]</span></div>
-      <div class="q-text" data-en="Identify the practice group and skill with the highest mean percentage of successful post-test performances."
-           data-es="Identifica el grupo de práctica y la habilidad con el mayor porcentaje medio de ejecuciones exitosas en el postest.">
-        Identify the practice group and skill with the highest mean percentage of successful post-test performances.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q2_1" value="A"> <span data-en="Variable – Dribbling, with a post-test mean of 93.22%" data-es="Variable – Regate, con una media postest de 93,22%">Variable – Dribbling, with a post-test mean of 93.22%</span></label>
-        <label class="mc-option"><input type="radio" name="q2_1" value="B"> <span data-en="Game-based – Trapping, with a post-test mean of 82.73% and a statistically significant improvement" data-es="Basado en juego – Trapping, con una media postest de 82,73% y una mejora estadísticamente significativa">Game-based – Trapping, with a post-test mean of 82.73% and a statistically significant improvement</span></label>
-        <label class="mc-option"><input type="radio" name="q2_1" value="C"> <span data-en="Fixed – Dribbling, with the highest pre-test mean of 92.23% across all groups" data-es="Fijo – Regate, con la media pretest más alta de 92,23% entre todos los grupos">Fixed – Dribbling, with the highest pre-test mean of 92.23% across all groups</span></label>
-        <label class="mc-option"><input type="radio" name="q2_1" value="D"> <span data-en="Game-based – Passing, which showed a statistically significant increase (p &lt; 0.05) from pre- to post-test" data-es="Basado en juego – Pase, que mostró un aumento estadísticamente significativo (p &lt; 0.05) entre pretest y postest">Game-based – Passing, which showed a statistically significant increase (p &lt; 0.05) from pre- to post-test</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q2_1','A','ex3_q1')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q2_1"></div>
-    </div>
-
-    <!-- Q3 a.iii -->
-    <div class="question-card locked-q" id="q2_2">
-      <div class="q-label">a.iii <span class="q-marks">[2]</span></div>
-      <div class="q-text" data-en="Calculate the difference in mean percentage between successful pre-test and post-test game-based trapping."
-           data-es="Calcula la diferencia en el porcentaje medio entre el trapping exitoso en el pretest y postest del grupo basado en el juego.">
-        Calculate the difference in mean percentage between successful pre-test and post-test game-based trapping.
-      </div>
-      <div class="text-input-wrap">
-        <input type="number" id="inp_q2_2" placeholder="e.g. 42" step="0.1"/>
-        <button class="submit-btn" onclick="checkNumeric('q2_2', [17, 18], 'ex3_q2')">
-          <span data-en="Submit" data-es="Enviar">Submit</span>
-        </button>
-      </div>
-      <div class="feedback" id="fb_q2_2"></div>
-    </div>
-
-    <!-- Q3 a.iv -->
-    <div class="question-card locked-q" id="q2_3">
-      <div class="q-label">a.iv <span class="q-marks">[4]</span></div>
-      <div class="q-text" data-en="Using the data, deduce the effect of each practice group on each skill."
-           data-es="Usando los datos, deduce el efecto de cada grupo de práctica en cada habilidad.">
-        Using the data, deduce the effect of each practice group on each skill.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q2_3" value="A">
-          <span data-en="All three practice groups produced significant improvements (p &lt; 0.05) in all four skills, with game-based practice showing the largest overall gains due to its match-specific context" data-es="Los tres grupos de práctica produjeron mejoras significativas (p &lt; 0.05) en las cuatro habilidades, siendo la práctica basada en juego la que mostró mayores ganancias globales por su contexto específico de partido">All three practice groups produced significant improvements (p &lt; 0.05) in all four skills, with game-based practice showing the largest overall gains due to its match-specific context</span></label>
-        <label class="mc-option"><input type="radio" name="q2_3" value="B">
-          <span data-en="Variability reduced for all skills/groups post-test; trapping and passing improved significantly through variable and game-based practice (p&lt;0.05); shooting and dribbling appear more advanced skills and showed less consistent improvement" data-es="La variabilidad se redujo en todas las habilidades/grupos en el postest; el trapping y el pase mejoraron significativamente con la práctica variable y basada en juego (p&lt;0.05); el disparo y el regate parecen habilidades más avanzadas y mostraron mejoras menos consistentes">Variability reduced for all skills/groups post-test; trapping and passing improved significantly through variable and game-based practice (p&lt;0.05); shooting and dribbling appear more advanced skills and showed less consistent improvement</span></label>
-        <label class="mc-option"><input type="radio" name="q2_3" value="C">
-          <span data-en="Fixed practice produced the greatest improvement across all skills due to repetition and consistency; variable and game-based practice increased variability and reduced performance reliability in post-test" data-es="La práctica fija produjo la mayor mejora en todas las habilidades gracias a la repetición y consistencia; la práctica variable y basada en juego aumentó la variabilidad y redujo la fiabilidad del rendimiento en el postest">Fixed practice produced the greatest improvement across all skills due to repetition and consistency; variable and game-based practice increased variability and reduced performance reliability in post-test</span></label>
-        <label class="mc-option"><input type="radio" name="q2_3" value="D">
-          <span data-en="Shooting and dribbling improved most consistently across all three groups post-test, while trapping and passing showed significant deterioration in the fixed practice group" data-es="El disparo y el regate mejoraron más consistentemente en los tres grupos en el postest, mientras que el trapping y el pase mostraron un deterioro significativo en el grupo de práctica fija">Shooting and dribbling improved most consistently across all three groups post-test, while trapping and passing showed significant deterioration in the fixed practice group</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q2_3','B','ex3_q3')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q2_3"></div>
-    </div>
-
-    <div class="completion-banner clickable" id="comp2" onclick="goToExercise(3)">
-      <h3 data-en="🎉 Exercise 3 Complete!" data-es="🎉 ¡Ejercicio 3 Completado!">🎉 Exercise 3 Complete!</h3>
-      <p data-en="Almost there! Exercise 4 is now unlocked." data-es="¡Casi terminas! El Ejercicio 4 ya está desbloqueado.">Almost there! Exercise 4 is now unlocked.</p>
-      <p class="next-hint" data-en="👉 Click here to go to Exercise 4" data-es="👉 Haz clic aquí para ir al Ejercicio 4">👉 Click here to go to Exercise 4</p>
-    </div>
+    <div class="feedback" id="fb_q0_1"></div>
   </div>
 
-  <!-- ===================== EXERCISE 4 ===================== -->
-  <div class="exercise-panel" id="panel3">
-
-    <div class="exercise-intro">
-      <h2 data-en="Exercise 4 – Plyometric Exercise & Sprint Speed" data-es="Ejercicio 4 – Ejercicio pliométrico y velocidad de sprint">Exercise 4 – Plyometric Exercise &amp; Sprint Speed</h2>
-      <p data-en="A study investigated the effect of plyometric exercise on sprint speed. The mean speed of each participant was measured during a 20 m sprint as a baseline and then in a further five 20 m sprints. Between sprints, participants did one of:"
-         data-es="Un estudio investigó el efecto del ejercicio pliométrico en la velocidad de sprint. La velocidad media de cada participante se midió en un sprint de 20 m como línea base y en otros cinco sprints. Entre sprints, los participantes realizaron:">
-        A study investigated the effect of plyometric exercise on sprint speed. The mean speed of each participant was measured during a 20 m sprint as a baseline and then in a further five 20 m sprints. Between sprints, participants did one of:
-      </p>
-      <ul>
-        <li data-en="Plyometric: three sets of alternate leg bounds" data-es="Pliométrico: tres series de saltos alternos de pierna">Plyometric: three sets of alternate leg bounds</li>
-        <li data-en="Control: continuous walking" data-es="Control: caminar continuamente">Control: continuous walking</li>
-      </ul>
-      <p style="margin-top:12px" data-en="The graph shows mean sprint speed and positive standard deviation for both conditions." data-es="El gráfico muestra la velocidad media de sprint y la desviación estándar positiva para ambas condiciones.">The graph shows mean sprint speed and positive standard deviation for both conditions.</p>
-
-      <img src="images/image7.png" alt="Graph: Mean sprint speed over 6 sprints – Plyometric vs Control" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
-
-      <img src="images/image8.png" alt="Table: Key data values for plyometric sprint study" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
-
-      <p data-en="A paired t-test comparing mean sprint speed at 4 minutes with baseline: Plyometric: p < 0.05; Control: p > 0.05." data-es="Una prueba t pareada comparó la velocidad media de sprint a los 4 minutos con la línea base: Pliométrico: p < 0.05; Control: p > 0.05.">A paired t-test comparing mean sprint speed at 4 minutes with baseline: Plyometric: p &lt; 0.05; Control: p &gt; 0.05.</p>
+  <!-- Q1 a.iii deduce -->
+  <div class="question-card locked-q" id="q0_2">
+    <div class="q-label">a.iii <span class="q-marks">[2]</span></div>
+    <div class="q-text" data-en="Using the data, deduce the effect of high level of participation in sport on performance in the standing broad jump test." data-es="Usando los datos, deduce el efecto de la alta participación deportiva en el rendimiento en la prueba de salto de longitud.">Using the data, deduce the effect of high level of participation in sport on performance in the standing broad jump test.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q0_2" value="A">
+        <span data-en="High training leads to better jump scores only in gymnasts and track athletes; other sports show no clear trend across the three training levels" data-es="El entrenamiento alto solo mejora el salto en gimnastas y atletismo; otros deportes no muestran tendencia clara entre los tres niveles de entrenamiento">High training leads to better jump scores only in gymnasts and track athletes; other sports show no clear trend across the three training levels</span></label>
+      <label class="mc-option"><input type="radio" name="q0_2" value="B">
+        <span data-en="Children who regularly participate in sport perform better; gymnasts outperform other sports across all training levels; and higher training (&gt;5 h/week) leads to greater standing broad jump performance in every sport" data-es="Los niños que participan regularmente en deporte rinden mejor; los gimnastas superan a otros deportes en todos los niveles de entrenamiento; y un mayor entrenamiento (&gt;5 h/semana) conduce a un mayor rendimiento en el salto de longitud en todos los deportes">Children who regularly participate in sport perform better; gymnasts outperform other sports across all training levels; and higher training (&gt;5 h/week) leads to greater standing broad jump performance in every sport</span></label>
+      <label class="mc-option"><input type="radio" name="q0_2" value="C">
+        <span data-en="Moderate training (&gt;1 h/week) appears sufficient to maximise jump performance; increasing to high training adds little further benefit across most sports in the study" data-es="El entrenamiento moderado (&gt;1 h/semana) parece suficiente para maximizar el rendimiento; aumentar al nivel alto aporta poco beneficio adicional en la mayoría de deportes del estudio">Moderate training (&gt;1 h/week) appears sufficient to maximise jump performance; increasing to high training adds little further benefit across most sports in the study</span></label>
+      <label class="mc-option"><input type="radio" name="q0_2" value="D">
+        <span data-en="High training consistently improves jump performance in team sports such as basketball, but shows a negative or negligible effect in individual sports such as gymnastics and swimming" data-es="El entrenamiento alto mejora consistentemente el salto en deportes de equipo como el baloncesto, pero muestra un efecto negativo o insignificante en deportes individuales como la gimnasia y la natación">High training consistently improves jump performance in team sports such as basketball, but shows a negative or negligible effect in individual sports such as gymnastics and swimming</span></label>
     </div>
-
-    <!-- Q4 a -->
-    <div class="question-card" id="q3_0">
-      <div class="q-label">a <span class="q-marks">[1]</span></div>
-      <div class="q-text" data-en="Identify the time and condition with the highest mean sprint speed."
-           data-es="Identifica el momento y la condición con la mayor velocidad media de sprint.">
-        Identify the time and condition with the highest mean sprint speed.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q3_0" value="A"> <span data-en="4 minutes – Plyometric, where sprint speed first surpassed the baseline value after the exercise intervention" data-es="4 minutos – Pliométrico, donde la velocidad de sprint superó por primera vez el valor de la línea base tras la intervención">4 minutes – Plyometric, where sprint speed first surpassed the baseline value after the exercise intervention</span></label>
-        <label class="mc-option"><input type="radio" name="q3_0" value="B"> <span data-en="8 minutes – Plyometric, where the highest mean sprint speed was recorded across all conditions and time points" data-es="8 minutos – Pliométrico, donde se registró la mayor velocidad media de sprint en todas las condiciones y momentos">8 minutes – Plyometric, where the highest mean sprint speed was recorded across all conditions and time points</span></label>
-        <label class="mc-option"><input type="radio" name="q3_0" value="C"> <span data-en="8 minutes – Control, where participants showed their peak speed following the walking recovery period" data-es="8 minutos – Control, donde los participantes mostraron su velocidad máxima tras el período de recuperación caminando">8 minutes – Control, where participants showed their peak speed following the walking recovery period</span></label>
-        <label class="mc-option"><input type="radio" name="q3_0" value="D"> <span data-en="Baseline – Control, as participants were fully rested before any intervention and recorded their highest unaffected sprint speed" data-es="Línea base – Control, ya que los participantes estaban completamente descansados antes de cualquier intervención y registraron su mayor velocidad de sprint sin efecto">Baseline – Control, as participants were fully rested before any intervention and recorded their highest unaffected sprint speed</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q3_0','B','ex4_q0')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q3_0"></div>
-    </div>
-
-    <!-- Q4 b -->
-    <div class="question-card locked-q" id="q3_1">
-      <div class="q-label">b <span class="q-marks">[2]</span></div>
-      <div class="q-text" data-en="Calculate the difference in mean sprint speed (m s⁻¹) between baseline and at 8 minutes for the plyometric condition."
-           data-es="Calcula la diferencia en la velocidad media de sprint (m s⁻¹) entre la línea base y los 8 minutos para la condición pliométrica.">
-        Calculate the difference in mean sprint speed (m s⁻¹) between baseline and at 4 minutes for the plyometric condition.
-      </div>
-      <div class="text-input-wrap">
-        <input type="number" id="inp_q3_1" placeholder="e.g. 42" step="0.01"/>
-        <button class="submit-btn" onclick="checkNumeric('q3_1', [0.17, 0.23], 'ex4_q1')">
-          <span data-en="Submit" data-es="Enviar">Submit</span>
-        </button>
-      </div>
-      <div class="feedback" id="fb_q3_1"></div>
-    </div>
-
-    <!-- Q4 c -->
-    <div class="question-card locked-q" id="q3_2">
-      <div class="q-label">c <span class="q-marks">[2]</span></div>
-      <div class="q-text" data-en="Using the data, discuss the hypothesis that plyometric exercise can improve sprint performance."
-           data-es="Usando los datos, discute la hipótesis de que el ejercicio pliométrico puede mejorar el rendimiento en sprint.">
-        Using the data, discuss the hypothesis that plyometric exercise can improve sprint performance.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q3_2" value="A">
-          <span data-en="Hypothesis is not supported: both conditions show similar sprint speeds at all time points, and the t-test (p &gt; 0.05) confirms no significant difference between plyometric and control at 4 minutes" data-es="La hipótesis no se apoya: ambas condiciones muestran velocidades similares en todos los momentos, y la prueba t (p &gt; 0.05) confirma que no hay diferencia significativa entre pliométrico y control a los 4 minutos">Hypothesis is not supported: both conditions show similar sprint speeds at all time points, and the t-test (p &gt; 0.05) confirms no significant difference between plyometric and control at 4 minutes</span></label>
-        <label class="mc-option"><input type="radio" name="q3_2" value="B">
-          <span data-en="Hypothesis is supported: plyometric exercise improved performance (p &lt; 0.05 at 4 min); no improvement before 4 min; plyometric speed remained better than control up to 12 min, though less effective after 8 min" data-es="La hipótesis se apoya: el ejercicio pliométrico mejoró el rendimiento (p &lt; 0.05 a los 4 min); sin mejora antes de los 4 min; la velocidad pliométrica fue mayor que el control hasta los 12 min, aunque menos efectiva después de los 8 min">Hypothesis is supported: plyometric exercise improved performance (p &lt; 0.05 at 4 min); no improvement before 4 min; plyometric speed remained better than control up to 12 min, though less effective after 8 min</span></label>
-        <label class="mc-option"><input type="radio" name="q3_2" value="C">
-          <span data-en="Hypothesis is partially supported: plyometric exercise only improves performance immediately after exercise" data-es="La hipótesis se apoya parcialmente: el ejercicio pliométrico solo mejora el rendimiento inmediatamente después del ejercicio">Hypothesis is partially supported: plyometric exercise only improves performance immediately after exercise</span></label>
-        <label class="mc-option"><input type="radio" name="q3_2" value="D">
-          <span data-en="Hypothesis is not supported: the control condition shows higher sprint speeds than plyometric at all time points" data-es="La hipótesis no se apoya: la condición control muestra velocidades mayores que la pliométrica en todos los momentos">Hypothesis is not supported: the control condition shows higher sprint speeds than plyometric at all time points</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q3_2','B','ex4_q2')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q3_2"></div>
-    </div>
-
-    <!-- Q4 d -->
-    <div class="question-card locked-q" id="q3_3">
-      <div class="q-label">d <span class="q-marks">[2]</span></div>
-      <div class="q-text" data-en="Explain the reason for using a control condition in this study design."
-           data-es="Explica la razón de usar una condición de control en este diseño de estudio.">
-        Explain the reason for using a control condition in this study design.
-      </div>
-      <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q3_3" value="A">
-          <span data-en="The control condition allows researchers to double the sample size by running two groups simultaneously, improving the statistical power of the t-test" data-es="La condición de control permite a los investigadores duplicar el tamaño muestral ejecutando dos grupos simultáneamente, mejorando la potencia estadística de la prueba t">The control condition allows researchers to double the sample size by running two groups simultaneously, improving the statistical power of the t-test</span></label>
-        <label class="mc-option"><input type="radio" name="q3_3" value="B">
-          <span data-en="The control provides a comparison point to show the effect of plyometric exercise vs walking only; allows one factor to be investigated while others are kept constant; and helps determine warm-up/fatigue effects, increasing internal validity" data-es="El control proporciona un punto de comparación para mostrar el efecto del ejercicio pliométrico frente a caminar; permite investigar un factor mientras los demás se mantienen constantes; y ayuda a determinar los efectos de calentamiento/fatiga, aumentando la validez interna">The control provides a comparison point to show the effect of plyometric exercise vs walking only; allows one factor to be investigated while others are kept constant; and helps determine warm-up/fatigue effects, increasing internal validity</span></label>
-        <label class="mc-option"><input type="radio" name="q3_3" value="C">
-          <span data-en="The control condition ensures that participants in the plyometric group are not influenced by the results of others, preventing demand characteristics from affecting sprint performance" data-es="La condición de control asegura que los participantes del grupo pliométrico no estén influenciados por los resultados de otros, evitando que las características de demanda afecten al rendimiento del sprint">The control condition ensures that participants in the plyometric group are not influenced by the results of others, preventing demand characteristics from affecting sprint performance</span></label>
-        <label class="mc-option"><input type="radio" name="q3_3" value="D">
-          <span data-en="The control condition eliminates all confounding variables, guaranteeing that any difference in sprint speed between groups is entirely caused by the plyometric exercise protocol" data-es="La condición de control elimina todas las variables de confusión, garantizando que cualquier diferencia en la velocidad de sprint entre grupos sea causada íntegramente por el protocolo de ejercicio pliométrico">The control condition eliminates all confounding variables, guaranteeing that any difference in sprint speed between groups is entirely caused by the plyometric exercise protocol</span></label>
-      </div>
-      <button class="submit-btn" onclick="checkMC('q3_3','B','ex4_q3')">
-        <span data-en="Submit" data-es="Enviar">Submit</span>
-      </button>
-      <div class="feedback" id="fb_q3_3"></div>
-    </div>
-
-    <div class="completion-banner" id="comp3">
-      <h3 data-en="🎉 Exercise 4 Complete!" data-es="🎉 ¡Ejercicio 4 Completado!">🎉 Exercise 4 Complete!</h3>
-      <p data-en="All exercises done!" data-es="¡Todos los ejercicios completados!">All exercises done!</p>
-    </div>
-  </div><!-- end panel3 -->
-
-  <!-- ===================== FINAL SCREEN ===================== -->
-  <div id="finalScreen" style="display:none; position:fixed; inset:0; z-index:999; background: linear-gradient(135deg, #1a1612 0%, #2d1a0a 50%, #1a1612 100%); overflow:hidden; align-items:center; justify-content:center; flex-direction:column; flex-direction:column;">
-    <canvas id="confettiCanvas" style="position:absolute; inset:0; pointer-events:none;"></canvas>
-    <div style="position:relative; z-index:2; text-align:center; padding: 40px 32px; max-width:620px; width:100%;">
-      <div style="font-size:5rem; margin-bottom:16px; display:block; animation: popIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both;">🏆</div>
-      <h1 id="finalTitle" style="font-family:'DM Serif Display',serif; font-size:2.6rem; color:#fffdf8; margin-bottom:12px; line-height:1.2;" data-en="Congratulations!" data-es="¡Enhorabuena!">Congratulations!</h1>
-      <p id="finalSub" style="font-size:1.1rem; color:#e8a020; font-weight:600; margin-bottom:20px;" data-en="You have completed all four Data Based Questions!" data-es="¡Has completado las cuatro Preguntas Basadas en Datos!">You have completed all four Data Based Questions!</p>
-      <div style="background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:12px; padding:20px 24px; margin-bottom:24px;">
-        <p id="finalMsg" style="font-size:0.98rem; color:#fffdf8; line-height:1.7; margin:0;" data-en="You have demonstrated your ability to read and interpret scientific data — a key skill in IB Sports, Exercise and Health Science." data-es="Has demostrado tu capacidad para leer e interpretar datos científicos — una habilidad clave en el SEHS del IB.">You have demonstrated your ability to read and interpret scientific data — a key skill in IB Sports, Exercise and Health Science.</p>
-      </div>
-      <div style="background:#c1440e; border-radius:10px; padding:16px 22px; margin-bottom:32px; border:2px solid #e8a020;">
-        <p id="finalReminder" style="font-size:0.95rem; color:#fff; font-weight:600; margin:0; line-height:1.6;" data-en="📸 Remember to take a screenshot of this screen and upload it into the task in ManageBac." data-es="📸 Recuerda hacer una captura de pantalla de esta pantalla y subirla a la tarea en ManageBac.">📸 Remember to take a screenshot of this screen and upload it into the task in ManageBac.</p>
-      </div>
-      <button onclick="restartAll()" id="restartBtn" data-en="↩ Start Again" data-es="↩ Volver a empezar" style="padding:12px 28px; background:transparent; border:2px solid #fffdf8; color:#fffdf8; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.92rem; font-weight:600; cursor:pointer;">↩ Start Again</button>
-    </div>
+    <button class="submit-btn" onclick="checkMC('q0_2','B','ex1_q2')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q0_2"></div>
   </div>
+
+  <!-- Q1 a.iii t-test -->
+  <div class="question-card locked-q" id="q0_3">
+    <div class="q-label">a.iii <span class="q-marks">[3]</span></div>
+    <div class="q-text" data-en="A two-tailed, unpaired t-test was conducted. Results: low vs moderate: p &gt; 0.05; moderate vs high: p &lt; 0.05; low vs high: p &lt; 0.01. Comment on the meaning of the results from the t-test." data-es="Se realizó una prueba t bilateral no pareada. Resultados: bajo vs moderado: p &gt; 0.05; moderado vs alto: p &lt; 0.05; bajo vs alto: p &lt; 0.01. Comenta el significado de los resultados.">A two-tailed, unpaired t-test was conducted. Results: low vs moderate: p &gt; 0.05; moderate vs high: p &lt; 0.05; low vs high: p &lt; 0.01. Comment on the meaning of the results from the t-test.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q0_3" value="A">
+        <span data-en="All three comparisons are statistically significant (p &lt; 0.05), confirming that each increase in training level produces a meaningfully different jump score" data-es="Las tres comparaciones son estadísticamente significativas (p &lt; 0.05), confirmando que cada aumento en el nivel de entrenamiento produce una puntuación de salto significativamente diferente">All three comparisons are statistically significant (p &lt; 0.05), confirming that each increase in training level produces a meaningfully different jump score</span></label>
+      <label class="mc-option"><input type="radio" name="q0_3" value="B">
+        <span data-en="Low vs moderate: not significant (p &gt; 0.05), so no meaningful difference between these groups. Moderate vs high: significant (p &lt; 0.05). Low vs high: extremely significant (p &lt; 0.01), showing the greatest difference between training extremes" data-es="Bajo vs moderado: no significativo (p &gt; 0.05), sin diferencia significativa entre estos grupos. Moderado vs alto: significativo (p &lt; 0.05). Bajo vs alto: extremadamente significativo (p &lt; 0.01), la mayor diferencia entre los extremos de entrenamiento">Low vs moderate: not significant (p &gt; 0.05), so no meaningful difference between these groups. Moderate vs high: significant (p &lt; 0.05). Low vs high: extremely significant (p &lt; 0.01), showing the greatest difference between training extremes</span></label>
+      <label class="mc-option"><input type="radio" name="q0_3" value="C">
+        <span data-en="Low vs moderate: significant (p &lt; 0.05), indicating even small increases in training improve jump scores. Moderate vs high: not significant (p &gt; 0.05), suggesting diminishing returns at higher volumes. Low vs high: significant (p &lt; 0.01)" data-es="Bajo vs moderado: significativo (p &lt; 0.05), indicando que incluso pequeños aumentos en el entrenamiento mejoran el salto. Moderado vs alto: no significativo (p &gt; 0.05), sugiriendo rendimientos decrecientes a volúmenes altos. Bajo vs alto: significativo (p &lt; 0.01)">Low vs moderate: significant (p &lt; 0.05), indicating even small increases in training improve jump scores. Moderate vs high: not significant (p &gt; 0.05), suggesting diminishing returns at higher volumes. Low vs high: significant (p &lt; 0.01)</span></label>
+      <label class="mc-option"><input type="radio" name="q0_3" value="D">
+        <span data-en="All three comparisons are non-significant (p &gt; 0.05), meaning the observed differences in jump scores across training levels are likely due to chance rather than training" data-es="Las tres comparaciones son no significativas (p &gt; 0.05), lo que significa que las diferencias observadas en el salto entre niveles de entrenamiento probablemente se deben al azar más que al entrenamiento">All three comparisons are non-significant (p &gt; 0.05), meaning the observed differences in jump scores across training levels are likely due to chance rather than training</span></label>
+    </div>
+    <button class="submit-btn" onclick="checkMC('q0_3','B','ex1_q3')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q0_3"></div>
   </div>
+
+  <div class="completion-banner clickable" id="comp0" onclick="goToExercise(1)">
+    <h3 data-en="🎉 Exercise 1 Complete!" data-es="🎉 ¡Ejercicio 1 Completado!">🎉 Exercise 1 Complete!</h3>
+    <p data-en="Well done! Exercise 2 is now unlocked." data-es="¡Muy bien! El Ejercicio 2 ya está desbloqueado.">Well done! Exercise 2 is now unlocked.</p>
+    <p class="next-hint" data-en="👉 Click here to go to Exercise 2" data-es="👉 Haz clic aquí para ir al Ejercicio 2">👉 Click here to go to Exercise 2</p>
+  </div>
+</div><!-- end panel0 -->
+
+<!-- ═══════════════════════════════════════════════════════════ EXERCISE 2 -->
+<div class="exercise-panel" id="panel1">
+  <div class="exercise-intro">
+    <h2 data-en="Exercise 2 – Rugby Tackle Impact Force" data-es="Ejercicio 2 – Fuerza de impacto en el tackle de rugby">Exercise 2 – Rugby Tackle Impact Force</h2>
+    <p data-en="A study investigated the magnitude of the impact force (N) at the shoulder during tackling in 35 experienced rugby union players. The researchers examined:" data-es="Un estudio investigó la magnitud de la fuerza de impacto (N) en el hombro durante el placaje en 35 jugadores experimentados de rugby union. Los investigadores examinaron:">A study investigated the magnitude of the impact force (N) at the shoulder during tackling in 35 experienced rugby union players. The researchers examined:</p>
+    <ul>
+      <li data-en="Condition 1: Shoulder pads (with and without)" data-es="Condición 1: Hombreras (con y sin)">Condition 1: Shoulder pads (with and without)</li>
+      <li data-en="Condition 2: Shoulder (dominant vs non-dominant)" data-es="Condición 2: Hombro (dominante vs no dominante)">Condition 2: Shoulder (dominant vs non-dominant)</li>
+      <li data-en="Condition 3: Setting (laboratory vs rugby field)" data-es="Condición 3: Entorno (laboratorio vs campo de rugby)">Condition 3: Setting (laboratory vs rugby field)</li>
+    </ul>
+    <img src="images/image2.png" alt="Photo: Rugby tackle"/>
+    <p data-en="Table 1 shows the mean maximum impact force (N) and standard deviation for Conditions 1 and 2." data-es="La Tabla 1 muestra la fuerza de impacto máxima media (N) y desviación estándar para las Condiciones 1 y 2.">Table 1 shows the mean maximum impact force (N) and standard deviation for Conditions 1 and 2.</p>
+    <img src="images/image3.png" alt="Table 1: Impact force by shoulder and padding"/>
+    <p data-en="Table 2 shows the mean maximum impact force for trials in the laboratory and on the field (Condition 3)." data-es="La Tabla 2 muestra la fuerza de impacto máxima media para las pruebas en laboratorio y en campo (Condición 3).">Table 2 shows the mean maximum impact force for trials in the laboratory and on the field (Condition 3).</p>
+    <img src="images/image4.png" alt="Table 2: Lab vs field impact force"/>
+    <p data-en="A recent study tested the effect on impact force (N) of adding a soft-covering cap to a helmet when dropped from a set height. The graph shows results for helmets A, B, and C." data-es="Un estudio reciente probó el efecto en la fuerza de impacto (N) de añadir una cubierta blanda a un casco al caer desde una altura fija. El gráfico muestra los resultados para los cascos A, B y C.">A recent study tested the effect on impact force (N) of adding a soft-covering cap to a helmet when dropped from a set height. The graph shows results for helmets A, B, and C.</p>
+    <img src="images/image5.png" alt="Graph: Helmet impact force"/>
+    <p class="source-note">Source: Usman et al., Journal of Science and Medicine in Sport, 2011</p>
+  </div>
+
+  <!-- Q2 a.i -->
+  <div class="question-card" id="q1_0">
+    <div class="q-label">a.i <span class="q-marks">[1]</span></div>
+    <div class="q-text" data-en="Identify which shoulder has the greatest mean impact force." data-es="Identifica qué hombro tiene la mayor fuerza de impacto media.">Identify which shoulder has the greatest mean impact force.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q1_0" value="A">
+        <span data-en="Non-dominant shoulder, with a mean force approximately 75 N greater than the dominant shoulder across both padding conditions" data-es="Hombro no dominante, con una fuerza media aproximadamente 75 N mayor que el dominante en ambas condiciones de hombrera">Non-dominant shoulder, with a mean force approximately 75 N greater than the dominant shoulder across both padding conditions</span></label>
+      <label class="mc-option"><input type="radio" name="q1_0" value="B">
+        <span data-en="Dominant shoulder, with a greater mean impact force than the non-dominant shoulder in both the with-pads and without-pads conditions" data-es="Hombro dominante, con una fuerza de impacto media mayor que el no dominante tanto con hombreras como sin ellas">Dominant shoulder, with a greater mean impact force than the non-dominant shoulder in both the with-pads and without-pads conditions</span></label>
+      <label class="mc-option"><input type="radio" name="q1_0" value="C">
+        <span data-en="Both shoulders show identical mean impact forces when averaged across the two padding conditions in the study" data-es="Ambos hombros muestran fuerzas de impacto medias idénticas al promediar las dos condiciones de hombrera del estudio">Both shoulders show identical mean impact forces when averaged across the two padding conditions in the study</span></label>
+    </div>
+    <button class="submit-btn" onclick="checkMC('q1_0','B','ex2_q0')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q1_0"></div>
+  </div>
+
+  <!-- Q2 a.ii -->
+  <div class="question-card locked-q" id="q1_1">
+    <div class="q-label">a.ii <span class="q-marks">[2]</span></div>
+    <div class="q-text" data-en="Calculate the difference, in Newtons, between mean maximum impact force for dominant and non-dominant shoulders for players wearing pads." data-es="Calcula la diferencia, en Newtons, entre la fuerza de impacto máxima media para el hombro dominante y no dominante de los jugadores que usan hombreras.">Calculate the difference, in Newtons, between mean maximum impact force for dominant and non-dominant shoulders for players wearing pads.</div>
+    <div class="text-input-wrap">
+      <input type="number" id="inp_q1_1" placeholder="e.g. 42" step="0.1"/>
+      <button class="submit-btn" onclick="checkNumeric('q1_1',[123,125],'ex2_q1')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    </div>
+    <div class="feedback" id="fb_q1_1"></div>
+  </div>
+
+  <!-- Q2 a.iii -->
+  <div class="question-card locked-q" id="q1_2">
+    <div class="q-label">a.iii <span class="q-marks">[2]</span></div>
+    <div class="q-text" data-en="Using the data, discuss the hypothesis that wearing padding could reduce the incidence of injuries to the tackler in rugby union." data-es="Usando los datos, discute la hipótesis de que usar hombreras podría reducir la incidencia de lesiones en el placador de rugby union.">Using the data, discuss the hypothesis that wearing padding could reduce the incidence of injuries to the tackler in rugby union.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q1_2" value="A">
+        <span data-en="The data does not support the hypothesis; the small reduction in force with padding falls within the standard deviation range, suggesting the difference is unlikely to be meaningful in reducing injuries" data-es="Los datos no apoyan la hipótesis; la pequeña reducción de fuerza con hombreras está dentro del rango de desviación estándar, lo que sugiere que la diferencia probablemente no es significativa para reducir lesiones">The data does not support the hypothesis; the small reduction in force with padding falls within the standard deviation range, suggesting the difference is unlikely to be meaningful in reducing injuries</span></label>
+      <label class="mc-option"><input type="radio" name="q1_2" value="B">
+        <span data-en="Padding reduces mean impact force for both shoulders, supporting the hypothesis that padding lowers injury risk; however, force is still high so injury is not eliminated" data-es="Las hombreras reducen la fuerza de impacto media en ambos hombros, apoyando la hipótesis de que las hombreras reducen el riesgo de lesiones; sin embargo, la fuerza sigue siendo alta por lo que no se elimina la lesión">Padding reduces mean impact force for both shoulders, supporting the hypothesis that padding lowers injury risk; however, force is still high so injury is not eliminated</span></label>
+      <label class="mc-option"><input type="radio" name="q1_2" value="C">
+        <span data-en="Padding increases mean impact force on the dominant shoulder while reducing it on the non-dominant shoulder, so the overall effect on injury incidence across both shoulders is unclear" data-es="Las hombreras aumentan la fuerza de impacto media en el hombro dominante mientras la reducen en el no dominante, por lo que el efecto global sobre la incidencia de lesiones en ambos hombros no está claro">Padding increases mean impact force on the dominant shoulder while reducing it on the non-dominant shoulder, so the overall effect on injury incidence across both shoulders is unclear</span></label>
+      <label class="mc-option"><input type="radio" name="q1_2" value="D">
+        <span data-en="Padding significantly reduces mean impact force for both shoulders and fully supports the hypothesis, suggesting that wearing pads effectively eliminates the risk of shoulder injury during rugby tackles" data-es="Las hombreras reducen significativamente la fuerza de impacto media en ambos hombros y apoyan plenamente la hipótesis, sugiriendo que el uso de hombreras elimina eficazmente el riesgo de lesión de hombro durante los placajes">Padding significantly reduces mean impact force for both shoulders and fully supports the hypothesis, suggesting that wearing pads effectively eliminates the risk of shoulder injury during rugby tackles</span></label>
+    </div>
+    <button class="submit-btn" onclick="checkMC('q1_2','B','ex2_q2')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q1_2"></div>
+  </div>
+
+  <!-- Q2 c helmet lowest -->
+  <div class="question-card locked-q" id="q1_3">
+    <div class="q-label">c <span class="q-marks">[1]</span></div>
+    <div class="q-text" data-en="Identify the brand of helmet that demonstrated the lowest mean impact force." data-es="Identifica la marca de casco que mostró la menor fuerza de impacto media.">Identify the brand of helmet that demonstrated the lowest mean impact force.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q1_3" value="A">
+        <span data-en="Helmet A, with a mean impact force of approximately 65 N without the soft cap – the lowest of all three brands" data-es="Casco A, con una fuerza de impacto media de aproximadamente 65 N sin cubierta blanda – la más baja de las tres marcas">Helmet A, with a mean impact force of approximately 65 N without the soft cap – the lowest of all three brands</span></label>
+      <label class="mc-option"><input type="radio" name="q1_3" value="B">
+        <span data-en="Helmet B, which showed the most consistent reduction in force when the soft cap was added, resulting in the lowest overall mean across both conditions" data-es="Casco B, que mostró la reducción de fuerza más consistente al añadir la cubierta blanda, resultando en la media global más baja en ambas condiciones">Helmet B, which showed the most consistent reduction in force when the soft cap was added, resulting in the lowest overall mean across both conditions</span></label>
+      <label class="mc-option"><input type="radio" name="q1_3" value="C">
+        <span data-en="Helmet C, which recorded the lowest mean impact force specifically in the with-cap condition, dropping below both A and B at that measurement" data-es="Casco C, que registró la menor fuerza de impacto media específicamente en la condición con cubierta, cayendo por debajo de A y B en esa medición">Helmet C, which recorded the lowest mean impact force specifically in the with-cap condition, dropping below both A and B at that measurement</span></label>
+    </div>
+    <button class="submit-btn" onclick="checkMC('q1_3','A','ex2_q3')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q1_3"></div>
+  </div>
+
+  <div class="completion-banner clickable" id="comp1" onclick="goToExercise(2)">
+    <h3 data-en="🎉 Exercise 2 Complete!" data-es="🎉 ¡Ejercicio 2 Completado!">🎉 Exercise 2 Complete!</h3>
+    <p data-en="Excellent work! Exercise 3 is now unlocked." data-es="¡Excelente trabajo! El Ejercicio 3 ya está desbloqueado.">Excellent work! Exercise 3 is now unlocked.</p>
+    <p class="next-hint" data-en="👉 Click here to go to Exercise 3" data-es="👉 Haz clic aquí para ir al Ejercicio 3">👉 Click here to go to Exercise 3</p>
+  </div>
+</div><!-- end panel1 -->
+
+<!-- ═══════════════════════════════════════════════════════════ EXERCISE 3 -->
+<div class="exercise-panel" id="panel2">
+  <div class="exercise-intro">
+    <h2 data-en="Exercise 3 – Field Hockey Practice Groups" data-es="Ejercicio 3 – Grupos de práctica de hockey hierba">Exercise 3 – Field Hockey Practice Groups</h2>
+    <p data-en="A study investigated the effect of practice on improvement of four field hockey skills. Participants engaged in pre-test and post-test competitions before and after a six-week training programme. Participants were randomly allocated to one of three practice groups:" data-es="Un estudio investigó el efecto de la práctica en la mejora de cuatro habilidades de hockey hierba. Los participantes realizaron competiciones de pretest y postest antes y después de un programa de seis semanas. Se asignaron aleatoriamente a uno de tres grupos:">A study investigated the effect of practice on improvement of four field hockey skills. Participants engaged in pre-test and post-test competitions before and after a six-week training programme. Participants were randomly allocated to one of three practice groups:</p>
+    <ul>
+      <li data-en="Fixed" data-es="Fijo">Fixed</li>
+      <li data-en="Variable" data-es="Variable">Variable</li>
+      <li data-en="Game-based" data-es="Basado en el juego">Game-based</li>
+    </ul>
+    <p style="margin-top:12px" data-en="Results for successful performance of each skill during competitions are shown in the table (* p &lt; 0.05)." data-es="Los resultados para la ejecución exitosa de cada habilidad se muestran en la tabla (* p &lt; 0.05).">Results for successful performance of each skill during competitions are shown in the table (* p &lt; 0.05).</p>
+    <img src="images/image6.png" alt="Table: Field hockey skills results"/>
+  </div>
+
+  <!-- Q3 a.i -->
+  <div class="question-card" id="q2_0">
+    <div class="q-label">a.i <span class="q-marks">[1]</span></div>
+    <div class="q-text" data-en="State the mean percentage for successful passing by the fixed practice group in the pre-test competition." data-es="Indica el porcentaje medio de pases exitosos del grupo de práctica fija en la competición pretest.">State the mean percentage for successful passing by the fixed practice group in the pre-test competition.</div>
+    <div class="text-input-wrap">
+      <input type="number" id="inp_q2_0" placeholder="e.g. 42" step="0.01"/>
+      <button class="submit-btn" onclick="checkNumeric('q2_0',[67.5,68.5],'ex3_q0')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    </div>
+    <div class="feedback" id="fb_q2_0"></div>
+  </div>
+
+  <!-- Q3 a.ii -->
+  <div class="question-card locked-q" id="q2_1">
+    <div class="q-label">a.ii <span class="q-marks">[1]</span></div>
+    <div class="q-text" data-en="Identify the practice group and skill with the highest mean percentage of successful post-test performances." data-es="Identifica el grupo de práctica y la habilidad con el mayor porcentaje medio de ejecuciones exitosas en el postest.">Identify the practice group and skill with the highest mean percentage of successful post-test performances.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q2_1" value="A">
+        <span data-en="Variable – Dribbling, with a post-test mean of 93.22%, the highest recorded value in the entire post-test dataset" data-es="Variable – Regate, con una media postest de 93,22%, el valor más alto registrado en todo el conjunto de datos postest">Variable – Dribbling, with a post-test mean of 93.22%, the highest recorded value in the entire post-test dataset</span></label>
+      <label class="mc-option"><input type="radio" name="q2_1" value="B">
+        <span data-en="Game-based – Trapping, which showed a statistically significant improvement (p &lt; 0.05) and reached a post-test mean of 82.73%" data-es="Basado en juego – Trapping, que mostró una mejora estadísticamente significativa (p &lt; 0.05) y alcanzó una media postest de 82,73%">Game-based – Trapping, which showed a statistically significant improvement (p &lt; 0.05) and reached a post-test mean of 82.73%</span></label>
+      <label class="mc-option"><input type="radio" name="q2_1" value="C">
+        <span data-en="Fixed – Dribbling, which had the highest pre-test mean of 92.23% and therefore the strongest baseline performance of any group" data-es="Fijo – Regate, que tuvo la media pretest más alta de 92,23% y por tanto el mejor rendimiento de base de cualquier grupo">Fixed – Dribbling, which had the highest pre-test mean of 92.23% and therefore the strongest baseline performance of any group</span></label>
+      <label class="mc-option"><input type="radio" name="q2_1" value="D">
+        <span data-en="Game-based – Passing, which achieved a statistically significant post-test increase (p &lt; 0.05) and showed the largest absolute improvement of any skill in that group" data-es="Basado en juego – Pase, que logró un aumento postest estadísticamente significativo (p &lt; 0.05) y mostró la mayor mejora absoluta de cualquier habilidad en ese grupo">Game-based – Passing, which achieved a statistically significant post-test increase (p &lt; 0.05) and showed the largest absolute improvement of any skill in that group</span></label>
+    </div>
+    <button class="submit-btn" onclick="checkMC('q2_1','A','ex3_q1')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q2_1"></div>
+  </div>
+
+  <!-- Q3 a.iii calc -->
+  <div class="question-card locked-q" id="q2_2">
+    <div class="q-label">a.iii <span class="q-marks">[2]</span></div>
+    <div class="q-text" data-en="Calculate the difference in mean percentage between successful pre-test and post-test game-based trapping." data-es="Calcula la diferencia en el porcentaje medio entre el trapping exitoso en el pretest y postest del grupo basado en el juego.">Calculate the difference in mean percentage between successful pre-test and post-test game-based trapping.</div>
+    <div class="text-input-wrap">
+      <input type="number" id="inp_q2_2" placeholder="e.g. 42" step="0.01"/>
+      <button class="submit-btn" onclick="checkNumeric('q2_2',[17,18],'ex3_q2')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    </div>
+    <div class="feedback" id="fb_q2_2"></div>
+  </div>
+
+  <!-- Q3 a.iv deduce -->
+  <div class="question-card locked-q" id="q2_3">
+    <div class="q-label">a.iv <span class="q-marks">[4]</span></div>
+    <div class="q-text" data-en="Using the data, deduce the effect of each practice group on each skill." data-es="Usando los datos, deduce el efecto de cada grupo de práctica en cada habilidad.">Using the data, deduce the effect of each practice group on each skill.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q2_3" value="A">
+        <span data-en="All three practice groups produced statistically significant improvements (p &lt; 0.05) in all four skills, with game-based practice showing the largest overall gains due to its match-specific competitive context" data-es="Los tres grupos de práctica produjeron mejoras estadísticamente significativas (p &lt; 0.05) en las cuatro habilidades, siendo la práctica basada en juego la que mostró mayores ganancias globales por su contexto competitivo específico de partido">All three practice groups produced statistically significant improvements (p &lt; 0.05) in all four skills, with game-based practice showing the largest overall gains due to its match-specific competitive context</span></label>
+      <label class="mc-option"><input type="radio" name="q2_3" value="B">
+        <span data-en="Variability reduced for all skills/groups post-test; trapping and passing improved significantly through variable and game-based practice (p &lt; 0.05); shooting and dribbling appear more advanced skills and showed less consistent improvement across groups" data-es="La variabilidad se redujo en todas las habilidades/grupos en el postest; el trapping y el pase mejoraron significativamente con la práctica variable y basada en juego (p &lt; 0.05); el disparo y el regate parecen habilidades más avanzadas y mostraron mejoras menos consistentes entre grupos">Variability reduced for all skills/groups post-test; trapping and passing improved significantly through variable and game-based practice (p &lt; 0.05); shooting and dribbling appear more advanced skills and showed less consistent improvement across groups</span></label>
+      <label class="mc-option"><input type="radio" name="q2_3" value="C">
+        <span data-en="Fixed practice produced the greatest improvement across all four skills due to block repetition and consistency; variable and game-based practice increased performance variability and reduced post-test reliability compared to fixed" data-es="La práctica fija produjo la mayor mejora en las cuatro habilidades gracias a la repetición en bloque y la consistencia; la práctica variable y basada en juego aumentó la variabilidad del rendimiento y redujo la fiabilidad en el postest en comparación con la fija">Fixed practice produced the greatest improvement across all four skills due to block repetition and consistency; variable and game-based practice increased performance variability and reduced post-test reliability compared to fixed</span></label>
+      <label class="mc-option"><input type="radio" name="q2_3" value="D">
+        <span data-en="Shooting and dribbling improved most consistently across all three groups post-test, while trapping and passing showed significant deterioration specifically in the fixed practice group" data-es="El disparo y el regate mejoraron más consistentemente en los tres grupos en el postest, mientras que el trapping y el pase mostraron un deterioro significativo específicamente en el grupo de práctica fija">Shooting and dribbling improved most consistently across all three groups post-test, while trapping and passing showed significant deterioration specifically in the fixed practice group</span></label>
+    </div>
+    <button class="submit-btn" onclick="checkMC('q2_3','B','ex3_q3')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q2_3"></div>
+  </div>
+
+  <div class="completion-banner clickable" id="comp2" onclick="goToExercise(3)">
+    <h3 data-en="🎉 Exercise 3 Complete!" data-es="🎉 ¡Ejercicio 3 Completado!">🎉 Exercise 3 Complete!</h3>
+    <p data-en="Almost there! Exercise 4 is now unlocked." data-es="¡Casi terminas! El Ejercicio 4 ya está desbloqueado.">Almost there! Exercise 4 is now unlocked.</p>
+    <p class="next-hint" data-en="👉 Click here to go to Exercise 4" data-es="👉 Haz clic aquí para ir al Ejercicio 4">👉 Click here to go to Exercise 4</p>
+  </div>
+</div><!-- end panel2 -->
+
+<!-- ═══════════════════════════════════════════════════════════ EXERCISE 4 -->
+<div class="exercise-panel" id="panel3">
+  <div class="exercise-intro">
+    <h2 data-en="Exercise 4 – Plyometric Exercise &amp; Sprint Speed" data-es="Ejercicio 4 – Ejercicio pliométrico y velocidad de sprint">Exercise 4 – Plyometric Exercise &amp; Sprint Speed</h2>
+    <p data-en="A study investigated the effect of plyometric exercise on sprint speed. Mean speed was measured during a 20 m sprint as a baseline and then in five further sprints. Between sprints, participants did one of:" data-es="Un estudio investigó el efecto del ejercicio pliométrico en la velocidad de sprint. La velocidad media se midió en un sprint de 20 m como línea base y en otros cinco sprints. Entre sprints, los participantes realizaron:">A study investigated the effect of plyometric exercise on sprint speed. Mean speed was measured during a 20 m sprint as a baseline and then in five further sprints. Between sprints, participants did one of:</p>
+    <ul>
+      <li data-en="Plyometric: three sets of alternate leg bounds" data-es="Pliométrico: tres series de saltos alternos de pierna">Plyometric: three sets of alternate leg bounds</li>
+      <li data-en="Control: continuous walking" data-es="Control: caminar continuamente">Control: continuous walking</li>
+    </ul>
+    <p style="margin-top:12px" data-en="The graph shows mean sprint speed and positive standard deviation for both conditions." data-es="El gráfico muestra la velocidad media de sprint y la desviación estándar positiva para ambas condiciones.">The graph shows mean sprint speed and positive standard deviation for both conditions.</p>
+    <img src="images/image7.png" alt="Graph: Sprint speed plyometric vs control"/>
+    <img src="images/image8.png" alt="Table: Key sprint data values"/>
+    <p data-en="A paired t-test comparing mean sprint speed at 4 minutes with baseline: Plyometric: p &lt; 0.05; Control: p &gt; 0.05." data-es="Una prueba t pareada comparó la velocidad media de sprint a los 4 minutos con la línea base: Pliométrico: p &lt; 0.05; Control: p &gt; 0.05.">A paired t-test comparing mean sprint speed at 4 minutes with baseline: Plyometric: p &lt; 0.05; Control: p &gt; 0.05.</p>
+  </div>
+
+  <!-- Q4 a -->
+  <div class="question-card" id="q3_0">
+    <div class="q-label">a <span class="q-marks">[1]</span></div>
+    <div class="q-text" data-en="Identify the time and condition with the highest mean sprint speed." data-es="Identifica el momento y la condición con la mayor velocidad media de sprint.">Identify the time and condition with the highest mean sprint speed.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q3_0" value="A">
+        <span data-en="4 minutes – Plyometric, where sprint speed first exceeded the baseline value after the plyometric intervention began" data-es="4 minutos – Pliométrico, donde la velocidad de sprint superó por primera vez el valor de la línea base tras el inicio de la intervención pliométrica">4 minutes – Plyometric, where sprint speed first exceeded the baseline value after the plyometric intervention began</span></label>
+      <label class="mc-option"><input type="radio" name="q3_0" value="B">
+        <span data-en="8 minutes – Plyometric, where the highest mean sprint speed was recorded across all conditions and time points in the study" data-es="8 minutos – Pliométrico, donde se registró la mayor velocidad media de sprint en todas las condiciones y momentos del estudio">8 minutes – Plyometric, where the highest mean sprint speed was recorded across all conditions and time points in the study</span></label>
+      <label class="mc-option"><input type="radio" name="q3_0" value="C">
+        <span data-en="8 minutes – Control, where participants reached their peak walking-recovery sprint speed following the full rest protocol" data-es="8 minutos – Control, donde los participantes alcanzaron su velocidad máxima de sprint tras el protocolo completo de recuperación caminando">8 minutes – Control, where participants reached their peak walking-recovery sprint speed following the full rest protocol</span></label>
+      <label class="mc-option"><input type="radio" name="q3_0" value="D">
+        <span data-en="Baseline – Control, as participants were fully rested with no prior intervention and therefore produced their highest unaffected sprint performance" data-es="Línea base – Control, ya que los participantes estaban completamente descansados sin intervención previa y por tanto produjeron su mayor rendimiento de sprint sin efecto">Baseline – Control, as participants were fully rested with no prior intervention and therefore produced their highest unaffected sprint performance</span></label>
+    </div>
+    <button class="submit-btn" onclick="checkMC('q3_0','B','ex4_q0')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q3_0"></div>
+  </div>
+
+  <!-- Q4 b -->
+  <div class="question-card locked-q" id="q3_1">
+    <div class="q-label">b <span class="q-marks">[2]</span></div>
+    <div class="q-text" data-en="Calculate the difference in mean sprint speed (m s&#8315;&#185;) between baseline and at 8 minutes for the plyometric condition." data-es="Calcula la diferencia en la velocidad media de sprint (m s&#8315;&#185;) entre la línea base y los 8 minutos para la condición pliométrica.">Calculate the difference in mean sprint speed (m s&#8315;&#185;) between baseline and at 8 minutes for the plyometric condition.</div>
+    <div class="text-input-wrap">
+      <input type="number" id="inp_q3_1" placeholder="e.g. 42" step="0.01"/>
+      <button class="submit-btn" onclick="checkNumeric('q3_1',[0.17,0.23],'ex4_q1')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    </div>
+    <div class="feedback" id="fb_q3_1"></div>
+  </div>
+
+  <!-- Q4 c -->
+  <div class="question-card locked-q" id="q3_2">
+    <div class="q-label">c <span class="q-marks">[2]</span></div>
+    <div class="q-text" data-en="Using the data, discuss the hypothesis that plyometric exercise can improve sprint performance." data-es="Usando los datos, discute la hipótesis de que el ejercicio pliométrico puede mejorar el rendimiento en sprint.">Using the data, discuss the hypothesis that plyometric exercise can improve sprint performance.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q3_2" value="A">
+        <span data-en="Hypothesis is not supported: both conditions show similar sprint speeds at all time points, and the t-test (p &gt; 0.05) confirms no significant difference between plyometric and control at 4 minutes" data-es="La hipótesis no se apoya: ambas condiciones muestran velocidades similares en todos los momentos, y la prueba t (p &gt; 0.05) confirma que no hay diferencia significativa entre pliométrico y control a los 4 minutos">Hypothesis is not supported: both conditions show similar sprint speeds at all time points, and the t-test (p &gt; 0.05) confirms no significant difference between plyometric and control at 4 minutes</span></label>
+      <label class="mc-option"><input type="radio" name="q3_2" value="B">
+        <span data-en="Hypothesis is supported: plyometric exercise improved performance (p &lt; 0.05 at 4 min); no improvement before 4 min; plyometric speed remained better than control up to 12 min, though less effective after 8 min" data-es="La hipótesis se apoya: el ejercicio pliométrico mejoró el rendimiento (p &lt; 0.05 a los 4 min); sin mejora antes de los 4 min; la velocidad pliométrica fue mayor que el control hasta los 12 min, aunque menos efectiva después de los 8 min">Hypothesis is supported: plyometric exercise improved performance (p &lt; 0.05 at 4 min); no improvement before 4 min; plyometric speed remained better than control up to 12 min, though less effective after 8 min</span></label>
+      <label class="mc-option"><input type="radio" name="q3_2" value="C">
+        <span data-en="Hypothesis is supported only for the immediate post-exercise period: plyometric speed is significantly higher right after exercise (p &lt; 0.05), but returns to baseline values by 4 minutes, suggesting only a very short-term effect" data-es="La hipótesis se apoya solo en el período inmediatamente posterior al ejercicio: la velocidad pliométrica es significativamente mayor justo después del ejercicio (p &lt; 0.05), pero vuelve a los valores de la línea base a los 4 minutos, sugiriendo solo un efecto muy a corto plazo">Hypothesis is supported only for the immediate post-exercise period: plyometric speed is significantly higher right after exercise (p &lt; 0.05), but returns to baseline values by 4 minutes, suggesting only a very short-term effect</span></label>
+      <label class="mc-option"><input type="radio" name="q3_2" value="D">
+        <span data-en="Hypothesis is not supported: the control condition shows consistently higher sprint speeds than the plyometric condition from 4 minutes onwards, and the t-test confirms a significant difference (p &lt; 0.05) in favour of the control group" data-es="La hipótesis no se apoya: la condición control muestra velocidades consistentemente mayores que la pliométrica a partir de los 4 minutos, y la prueba t confirma una diferencia significativa (p &lt; 0.05) a favor del grupo control">Hypothesis is not supported: the control condition shows consistently higher sprint speeds than the plyometric condition from 4 minutes onwards, and the t-test confirms a significant difference (p &lt; 0.05) in favour of the control group</span></label>
+    </div>
+    <button class="submit-btn" onclick="checkMC('q3_2','B','ex4_q2')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q3_2"></div>
+  </div>
+
+  <!-- Q4 d -->
+  <div class="question-card locked-q" id="q3_3">
+    <div class="q-label">d <span class="q-marks">[2]</span></div>
+    <div class="q-text" data-en="Explain the reason for using a control condition in this study design." data-es="Explica la razón de usar una condición de control en este diseño de estudio.">Explain the reason for using a control condition in this study design.</div>
+    <div class="mc-options">
+      <label class="mc-option"><input type="radio" name="q3_3" value="A">
+        <span data-en="The control condition doubles the effective sample size by running two groups simultaneously, thereby increasing the statistical power of the paired t-test analysis" data-es="La condición de control duplica el tamaño muestral efectivo ejecutando dos grupos simultáneamente, aumentando así la potencia estadística del análisis de la prueba t pareada">The control condition doubles the effective sample size by running two groups simultaneously, thereby increasing the statistical power of the paired t-test analysis</span></label>
+      <label class="mc-option"><input type="radio" name="q3_3" value="B">
+        <span data-en="The control provides a comparison point to show the effect of plyometric exercise vs walking only; allows one factor to be investigated while others are kept constant; and helps determine warm-up/fatigue effects, increasing internal validity" data-es="El control proporciona un punto de comparación para mostrar el efecto del ejercicio pliométrico frente a caminar; permite investigar un factor mientras los demás se mantienen constantes; y ayuda a determinar los efectos de calentamiento/fatiga, aumentando la validez interna">The control provides a comparison point to show the effect of plyometric exercise vs walking only; allows one factor to be investigated while others are kept constant; and helps determine warm-up/fatigue effects, increasing internal validity</span></label>
+      <label class="mc-option"><input type="radio" name="q3_3" value="C">
+        <span data-en="The control condition prevents participants in the plyometric group from being influenced by each other's results, eliminating demand characteristics that could artificially inflate sprint performance scores" data-es="La condición de control evita que los participantes del grupo pliométrico se vean influenciados por los resultados de los demás, eliminando las características de demanda que podrían inflar artificialmente las puntuaciones de rendimiento del sprint">The control condition prevents participants in the plyometric group from being influenced by each other's results, eliminating demand characteristics that could artificially inflate sprint performance scores</span></label>
+      <label class="mc-option"><input type="radio" name="q3_3" value="D">
+        <span data-en="The control condition eliminates all confounding variables in the study, thereby guaranteeing that any observed difference in sprint speed between groups is caused entirely by the plyometric exercise protocol" data-es="La condición de control elimina todas las variables de confusión del estudio, garantizando así que cualquier diferencia observada en la velocidad de sprint entre grupos sea causada íntegramente por el protocolo de ejercicio pliométrico">The control condition eliminates all confounding variables in the study, thereby guaranteeing that any observed difference in sprint speed between groups is caused entirely by the plyometric exercise protocol</span></label>
+    </div>
+    <button class="submit-btn" onclick="checkMC('q3_3','B','ex4_q3')"><span data-en="Submit" data-es="Enviar">Submit</span></button>
+    <div class="feedback" id="fb_q3_3"></div>
+  </div>
+
+  <div class="completion-banner" id="comp3">
+    <h3 data-en="🎉 Exercise 4 Complete!" data-es="🎉 ¡Ejercicio 4 Completado!">🎉 Exercise 4 Complete!</h3>
+    <p data-en="All exercises done!" data-es="¡Todos los ejercicios completados!">All exercises done!</p>
+  </div>
+</div><!-- end panel3 -->
+
+<!-- ═══════════════════════════════════════════════════════════ FINAL SCREEN -->
+<div id="finalScreen" style="display:none; position:fixed; inset:0; z-index:999; background:linear-gradient(135deg,#1a1612 0%,#2d1a0a 50%,#1a1612 100%); overflow:hidden;">
+  <canvas id="confettiCanvas" style="position:absolute;inset:0;pointer-events:none;"></canvas>
+  <div style="position:relative;z-index:2;text-align:center;padding:40px 32px;max-width:620px;width:100%;margin:auto;">
+    <div style="font-size:5rem;margin-bottom:16px;display:block;animation:popIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both;">🏆</div>
+    <h1 id="finalTitle" style="font-family:'DM Serif Display',serif;font-size:2.6rem;color:#fffdf8;margin-bottom:12px;line-height:1.2;" data-en="Congratulations!" data-es="¡Enhorabuena!">Congratulations!</h1>
+    <p id="finalSub" style="font-size:1.1rem;color:#e8a020;font-weight:600;margin-bottom:20px;" data-en="You have completed all four Data Based Questions!" data-es="¡Has completado las cuatro Preguntas Basadas en Datos!">You have completed all four Data Based Questions!</p>
+    <div style="background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.15);border-radius:12px;padding:20px 24px;margin-bottom:24px;">
+      <p id="finalMsg" style="font-size:0.98rem;color:#fffdf8;line-height:1.7;margin:0;" data-en="You have demonstrated your ability to read and interpret scientific data — a key skill in IB Sports, Exercise and Health Science." data-es="Has demostrado tu capacidad para leer e interpretar datos científicos — una habilidad clave en el SEHS del IB.">You have demonstrated your ability to read and interpret scientific data — a key skill in IB Sports, Exercise and Health Science.</p>
+    </div>
+    <div style="background:#c1440e;border-radius:10px;padding:16px 22px;margin-bottom:32px;border:2px solid #e8a020;">
+      <p id="finalReminder" style="font-size:0.95rem;color:#fff;font-weight:600;margin:0;line-height:1.6;" data-en="📸 Remember to take a screenshot of this screen and upload it into the task in ManageBac." data-es="📸 Recuerda hacer una captura de pantalla de esta pantalla y subirla a la tarea en ManageBac.">📸 Remember to take a screenshot of this screen and upload it into the task in ManageBac.</p>
+    </div>
+    <button onclick="restartAll()" id="restartBtn" data-en="&#8617; Start Again" data-es="&#8617; Volver a empezar" style="padding:12px 28px;background:transparent;border:2px solid #fffdf8;color:#fffdf8;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:600;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">&#8617; Start Again</button>
+  </div>
+</div>
 
 </main>
 
 <script>
-  /* ── State ── */
   const state = {
     lang: 'en',
     currentEx: 0,
-    exerciseUnlocked: [true, false, false, false],
-    exerciseComplete: [false, false, false, false],
-    // Track which question in each exercise is currently active (0-indexed)
-    questionProgress: [0, 0, 0, 0],
-    // answers per exercise (4 questions each)
-    answered: Array.from({length:4}, () => [false,false,false,false])
+    exerciseUnlocked: [true,false,false,false],
+    exerciseComplete: [false,false,false,false],
+    answered: Array.from({length:4},()=>[false,false,false,false])
   };
 
-  /* ── Language ── */
   function toggleLang() {
     state.lang = state.lang === 'en' ? 'es' : 'en';
     document.getElementById('langToggle').textContent = state.lang === 'en' ? 'ES' : 'EN';
@@ -813,24 +491,21 @@
     document.querySelectorAll('[data-en]').forEach(el => {
       el.textContent = el.getAttribute('data-' + L) || el.getAttribute('data-en');
     });
-    // Re-apply header title
-    const ht = document.getElementById('header-title');
-    ht.textContent = L === 'en' ? 'Data Based Questions' : 'Preguntas Basadas en Datos';
+    document.getElementById('header-title').textContent = L === 'en' ? 'Data Based Questions' : 'Preguntas Basadas en Datos';
   }
 
-  /* ── Navigation ── */
   function goToExercise(idx) {
     if (!state.exerciseUnlocked[idx]) return;
     state.currentEx = idx;
     document.querySelectorAll('.exercise-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
     document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+    window.scrollTo({top:0, behavior:'smooth'});
   }
 
   function unlockExercise(idx) {
     if (idx >= 4) return;
     state.exerciseUnlocked[idx] = true;
-    const tab = document.getElementById('tab'+idx);
-    tab.classList.remove('locked');
+    document.getElementById('tab'+idx).classList.remove('locked');
   }
 
   function markExerciseComplete(idx) {
@@ -844,7 +519,6 @@
     }
   }
 
-  /* ── Question Unlock ── */
   function unlockQuestion(exIdx, qIdx) {
     const card = document.getElementById('q'+exIdx+'_'+qIdx);
     if (card) {
@@ -853,49 +527,38 @@
     }
   }
 
-  /* ── Answer checking ── */
   const feedbackText = {
-    correct: { en: '✓ Correct!', es: '✓ ¡Correcto!' },
-    wrong:   { en: '✗ Not quite. Try again.', es: '✗ No es correcto. Inténtalo de nuevo.' },
-    numeric_hint: { en: 'Use the graph/table to read the exact value.', es: 'Usa el gráfico/tabla para leer el valor exacto.' }
+    correct: {en:'&#10003; Correct!', es:'&#10003; &#161;Correcto!'},
+    wrong:   {en:'&#10007; Not quite. Try again.', es:'&#10007; No es correcto. Inténtalo de nuevo.'},
+    hint:    {en:'Use the graph/table to read the exact value.', es:'Usa el gráfico/tabla para leer el valor exacto.'},
+    select:  {en:'Please select an answer.', es:'Por favor selecciona una respuesta.'},
+    number:  {en:'Please enter a number.', es:'Por favor introduce un número.'}
   };
-
-  function getFB(type) { return feedbackText[type][state.lang]; }
+  const getFB = t => feedbackText[t][state.lang];
 
   function checkMC(cardId, correctVal, progressKey) {
     const parts = cardId.split('_');
     const exIdx = parseInt(parts[0].replace('q',''));
     const qIdx  = parseInt(parts[1]);
-    const selected = document.querySelector(`input[name="${cardId}"]:checked`);
+    const selected = document.querySelector('input[name="'+cardId+'"]:checked');
     const fb = document.getElementById('fb_'+cardId);
-
-    if (!selected) {
-      fb.className = 'feedback show err';
-      fb.textContent = state.lang === 'en' ? 'Please select an answer.' : 'Por favor selecciona una respuesta.';
-      return;
-    }
-
+    if (!selected) { fb.className='feedback show err'; fb.innerHTML=getFB('select'); return; }
     const correct = selected.value === correctVal;
-    // Style options
-    document.querySelectorAll(`input[name="${cardId}"]`).forEach(inp => {
+    document.querySelectorAll('input[name="'+cardId+'"]').forEach(inp => {
       const opt = inp.closest('.mc-option');
-      opt.classList.remove('selected','correct-opt','wrong-opt');
+      opt.classList.remove('correct-opt','wrong-opt');
       if (inp.value === correctVal) opt.classList.add('correct-opt');
       else if (inp.checked && !correct) opt.classList.add('wrong-opt');
     });
-
     if (correct) {
-      fb.className = 'feedback show ok';
-      fb.textContent = getFB('correct');
+      fb.className='feedback show ok'; fb.innerHTML=getFB('correct');
       document.getElementById('q'+exIdx+'_'+qIdx).classList.add('correct');
-      // disable inputs
-      document.querySelectorAll(`input[name="${cardId}"]`).forEach(i => i.disabled = true);
-      document.querySelector('#q'+exIdx+'_'+qIdx+' .submit-btn').disabled = true;
-      state.answered[exIdx][qIdx] = true;
-      advanceExercise(exIdx, qIdx);
+      document.querySelectorAll('input[name="'+cardId+'"]').forEach(i=>i.disabled=true);
+      document.querySelector('#q'+exIdx+'_'+qIdx+' .submit-btn').disabled=true;
+      state.answered[exIdx][qIdx]=true;
+      advanceExercise(exIdx,qIdx);
     } else {
-      fb.className = 'feedback show err';
-      fb.textContent = getFB('wrong');
+      fb.className='feedback show err'; fb.innerHTML=getFB('wrong');
       document.getElementById('q'+exIdx+'_'+qIdx).classList.add('wrong');
     }
   }
@@ -907,44 +570,26 @@
     const input = document.getElementById('inp_'+cardId);
     const val   = parseFloat(input.value);
     const fb    = document.getElementById('fb_'+cardId);
-
-    if (isNaN(val)) {
-      fb.className = 'feedback show err';
-      fb.textContent = state.lang === 'en' ? 'Please enter a number.' : 'Por favor introduce un número.';
-      return;
-    }
-
+    if (isNaN(val)) { fb.className='feedback show err'; fb.innerHTML=getFB('number'); return; }
     const correct = val >= range[0] && val <= range[1];
     if (correct) {
-      fb.className = 'feedback show ok';
-      fb.textContent = getFB('correct');
+      fb.className='feedback show ok'; fb.innerHTML=getFB('correct');
       document.getElementById('q'+exIdx+'_'+qIdx).classList.add('correct');
-      input.disabled = true;
-      document.querySelector('#q'+exIdx+'_'+qIdx+' .submit-btn').disabled = true;
-      state.answered[exIdx][qIdx] = true;
-      advanceExercise(exIdx, qIdx);
+      input.disabled=true;
+      document.querySelector('#q'+exIdx+'_'+qIdx+' .submit-btn').disabled=true;
+      state.answered[exIdx][qIdx]=true;
+      advanceExercise(exIdx,qIdx);
     } else {
-      fb.className = 'feedback show err';
-      fb.textContent = getFB('wrong') + ' ' + getFB('numeric_hint');
+      fb.className='feedback show err'; fb.innerHTML=getFB('wrong')+' '+getFB('hint');
       document.getElementById('q'+exIdx+'_'+qIdx).classList.add('wrong');
     }
   }
 
   function advanceExercise(exIdx, qIdx) {
     const next = qIdx + 1;
-    if (next < 4) {
-      unlockQuestion(exIdx, next);
-    } else {
-      // all 4 done
-      markExerciseComplete(exIdx);
-    }
+    if (next < 4) unlockQuestion(exIdx, next);
+    else markExerciseComplete(exIdx);
   }
-
-  /* ── Init: lock all questions except first of each exercise ── */
-  // First question of ex0 is already unlocked (no locked-q class needed)
-  // Others are locked by default via .locked-q class in HTML
-
-  applyLang();
 
   /* ── FINAL SCREEN & CONFETTI ── */
   function showFinalScreen() {
@@ -954,90 +599,64 @@
     fs.style.alignItems = 'center';
     fs.style.justifyContent = 'center';
     applyLang();
-    setTimeout(launchConfetti, 100);
+    setTimeout(launchConfetti, 150);
   }
 
-  function restartAll() {
-    location.reload();
-  }
+  function restartAll() { location.reload(); }
 
   function launchConfetti() {
     const canvas = document.getElementById('confettiCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
-
     const COLORS = ['#c1440e','#e8a020','#fffdf8','#2d7a4f','#4ab3f4','#f06292','#fff176'];
     const pieces = [];
-    const COUNT  = 180;
 
-    for (let i = 0; i < COUNT; i++) {
-      pieces.push({
-        x:     Math.random() * canvas.width,
-        y:     Math.random() * canvas.height - canvas.height,
-        w:     Math.random() * 12 + 5,
-        h:     Math.random() * 6  + 3,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        rot:   Math.random() * Math.PI * 2,
-        vx:    (Math.random() - 0.5) * 3,
-        vy:    Math.random() * 4 + 2,
-        vr:    (Math.random() - 0.5) * 0.15,
-        alpha: 1,
-      });
-    }
-
-    let frame;
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let alive = false;
-      pieces.forEach(p => {
-        p.x  += p.vx;
-        p.y  += p.vy;
-        p.rot+= p.vr;
-        if (p.y > canvas.height * 0.85) p.alpha -= 0.015;
-        if (p.alpha <= 0) return;
-        alive = true;
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, p.alpha);
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot);
-        ctx.fillStyle = p.color;
-        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-        ctx.restore();
-      });
-      if (alive) frame = requestAnimationFrame(draw);
-    }
-
-    draw();
-
-    // Re-burst every 3 seconds
-    const burst = setInterval(() => {
-      if (!document.getElementById('finalScreen') || document.getElementById('finalScreen').style.display === 'none') {
-        clearInterval(burst); cancelAnimationFrame(frame); return;
-      }
-      for (let i = 0; i < 60; i++) {
+    function addBurst(n) {
+      for (let i=0;i<n;i++) {
         pieces.push({
-          x:     Math.random() * canvas.width,
-          y:     -10,
-          w:     Math.random() * 12 + 5,
-          h:     Math.random() * 6  + 3,
-          color: COLORS[Math.floor(Math.random() * COLORS.length)],
-          rot:   Math.random() * Math.PI * 2,
-          vx:    (Math.random() - 0.5) * 3,
-          vy:    Math.random() * 4 + 2,
-          vr:    (Math.random() - 0.5) * 0.15,
-          alpha: 1,
+          x: Math.random()*canvas.width, y: Math.random()*canvas.height*0.3 - 20,
+          w: Math.random()*12+5, h: Math.random()*6+3,
+          color: COLORS[Math.floor(Math.random()*COLORS.length)],
+          rot: Math.random()*Math.PI*2,
+          vx: (Math.random()-0.5)*4, vy: Math.random()*4+2,
+          vr: (Math.random()-0.5)*0.15, alpha:1
         });
       }
-    }, 3000);
+    }
 
-    window.addEventListener('resize', () => {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
+    addBurst(200);
+    let frame;
+    function draw() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      let alive=false;
+      pieces.forEach(p=>{
+        p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr;
+        if(p.y>canvas.height*0.85) p.alpha-=0.018;
+        if(p.alpha<=0) return;
+        alive=true;
+        ctx.save();
+        ctx.globalAlpha=Math.max(0,p.alpha);
+        ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+        ctx.fillStyle=p.color;
+        ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+        ctx.restore();
+      });
+      if(alive) frame=requestAnimationFrame(draw);
+    }
+    draw();
+
+    const burst=setInterval(()=>{
+      const fs=document.getElementById('finalScreen');
+      if(!fs||fs.style.display==='none'){clearInterval(burst);cancelAnimationFrame(frame);return;}
+      addBurst(80);
+      if(!frame) draw();
+    },2500);
+
+    window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
   }
 
-
+  applyLang();
 </script>
 </body>
 </html>
