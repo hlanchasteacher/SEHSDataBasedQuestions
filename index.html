@@ -297,6 +297,11 @@
     }
     .completion-banner p { font-size: 0.97rem; opacity: 0.92; }
 
+    @keyframes popIn {
+      0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+    }
+
     /* ───── RESPONSIVE ───── */
     @media (max-width: 600px) {
       .exercise-intro, .question-card { padding: 20px 16px; }
@@ -666,6 +671,8 @@
 
       <img src="images/image7.png" alt="Graph: Mean sprint speed over 6 sprints – Plyometric vs Control" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
 
+      <img src="images/image8.png" alt="Table: Key data values for plyometric sprint study" style="max-width:100%; border-radius:8px; margin:16px 0; display:block; border:1px solid var(--border);"/>
+
       <p data-en="A paired t-test comparing mean sprint speed at 4 minutes with baseline: Plyometric: p < 0.05; Control: p > 0.05." data-es="Una prueba t pareada comparó la velocidad media de sprint a los 4 minutos con la línea base: Pliométrico: p < 0.05; Control: p > 0.05.">A paired t-test comparing mean sprint speed at 4 minutes with baseline: Plyometric: p &lt; 0.05; Control: p &gt; 0.05.</p>
     </div>
 
@@ -751,9 +758,27 @@
     </div>
 
     <div class="completion-banner" id="comp3">
-      <h3 data-en="🏆 All Exercises Complete!" data-es="🏆 ¡Todos los Ejercicios Completados!">🏆 All Exercises Complete!</h3>
-      <p data-en="Outstanding! You have completed all four data-based questions." data-es="¡Excelente! Has completado las cuatro preguntas basadas en datos.">Outstanding! You have completed all four data-based questions.</p>
+      <h3 data-en="🎉 Exercise 4 Complete!" data-es="🎉 ¡Ejercicio 4 Completado!">🎉 Exercise 4 Complete!</h3>
+      <p data-en="All exercises done!" data-es="¡Todos los ejercicios completados!">All exercises done!</p>
     </div>
+  </div><!-- end panel3 -->
+
+  <!-- ===================== FINAL SCREEN ===================== -->
+  <div id="finalScreen" style="display:none; position:fixed; inset:0; z-index:999; background: linear-gradient(135deg, #1a1612 0%, #2d1a0a 50%, #1a1612 100%); overflow:hidden; align-items:center; justify-content:center; flex-direction:column;">
+    <canvas id="confettiCanvas" style="position:absolute; inset:0; pointer-events:none;"></canvas>
+    <div style="position:relative; z-index:2; text-align:center; padding: 40px 32px; max-width:620px; width:100%;">
+      <div style="font-size:5rem; margin-bottom:16px; display:block; animation: popIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both;">🏆</div>
+      <h1 id="finalTitle" style="font-family:'DM Serif Display',serif; font-size:2.6rem; color:#fffdf8; margin-bottom:12px; line-height:1.2;" data-en="Congratulations!" data-es="¡Enhorabuena!">Congratulations!</h1>
+      <p id="finalSub" style="font-size:1.1rem; color:#e8a020; font-weight:600; margin-bottom:20px;" data-en="You have completed all four Data Based Questions!" data-es="¡Has completado las cuatro Preguntas Basadas en Datos!">You have completed all four Data Based Questions!</p>
+      <div style="background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:12px; padding:20px 24px; margin-bottom:24px;">
+        <p id="finalMsg" style="font-size:0.98rem; color:#fffdf8; line-height:1.7; margin:0;" data-en="You have demonstrated your ability to read and interpret scientific data — a key skill in IB Sports, Exercise and Health Science." data-es="Has demostrado tu capacidad para leer e interpretar datos científicos — una habilidad clave en el SEHS del IB.">You have demonstrated your ability to read and interpret scientific data — a key skill in IB Sports, Exercise and Health Science.</p>
+      </div>
+      <div style="background:#c1440e; border-radius:10px; padding:16px 22px; margin-bottom:32px; border:2px solid #e8a020;">
+        <p id="finalReminder" style="font-size:0.95rem; color:#fff; font-weight:600; margin:0; line-height:1.6;" data-en="📸 Remember to take a screenshot of this screen and upload it into the task in ManageBac." data-es="📸 Recuerda hacer una captura de pantalla de esta pantalla y subirla a la tarea en ManageBac.">📸 Remember to take a screenshot of this screen and upload it into the task in ManageBac.</p>
+      </div>
+      <button onclick="restartAll()" id="restartBtn" data-en="↩ Start Again" data-es="↩ Volver a empezar" style="padding:12px 28px; background:transparent; border:2px solid #fffdf8; color:#fffdf8; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.92rem; font-weight:600; cursor:pointer;">↩ Start Again</button>
+    </div>
+  </div>
   </div>
 
 </main>
@@ -807,7 +832,11 @@
     state.exerciseComplete[idx] = true;
     document.getElementById('tab'+idx).classList.add('completed');
     document.getElementById('comp'+idx).classList.add('show');
-    if (idx < 3) unlockExercise(idx+1);
+    if (idx < 3) {
+      unlockExercise(idx+1);
+    } else {
+      setTimeout(showFinalScreen, 1200);
+    }
   }
 
   /* ── Question Unlock ── */
@@ -911,6 +940,96 @@
   // Others are locked by default via .locked-q class in HTML
 
   applyLang();
+
+  /* ── FINAL SCREEN & CONFETTI ── */
+  function showFinalScreen() {
+    const fs = document.getElementById('finalScreen');
+    fs.style.display = 'flex';
+    applyLang();
+    launchConfetti();
+  }
+
+  function restartAll() {
+    location.reload();
+  }
+
+  function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const COLORS = ['#c1440e','#e8a020','#fffdf8','#2d7a4f','#4ab3f4','#f06292','#fff176'];
+    const pieces = [];
+    const COUNT  = 180;
+
+    for (let i = 0; i < COUNT; i++) {
+      pieces.push({
+        x:     Math.random() * canvas.width,
+        y:     Math.random() * canvas.height - canvas.height,
+        w:     Math.random() * 12 + 5,
+        h:     Math.random() * 6  + 3,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        rot:   Math.random() * Math.PI * 2,
+        vx:    (Math.random() - 0.5) * 3,
+        vy:    Math.random() * 4 + 2,
+        vr:    (Math.random() - 0.5) * 0.15,
+        alpha: 1,
+      });
+    }
+
+    let frame;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+      pieces.forEach(p => {
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.rot+= p.vr;
+        if (p.y > canvas.height * 0.85) p.alpha -= 0.015;
+        if (p.alpha <= 0) return;
+        alive = true;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      });
+      if (alive) frame = requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    // Re-burst every 3 seconds
+    const burst = setInterval(() => {
+      if (!document.getElementById('finalScreen') || document.getElementById('finalScreen').style.display === 'none') {
+        clearInterval(burst); cancelAnimationFrame(frame); return;
+      }
+      for (let i = 0; i < 60; i++) {
+        pieces.push({
+          x:     Math.random() * canvas.width,
+          y:     -10,
+          w:     Math.random() * 12 + 5,
+          h:     Math.random() * 6  + 3,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          rot:   Math.random() * Math.PI * 2,
+          vx:    (Math.random() - 0.5) * 3,
+          vy:    Math.random() * 4 + 2,
+          vr:    (Math.random() - 0.5) * 0.15,
+          alpha: 1,
+        });
+      }
+    }, 3000);
+
+    window.addEventListener('resize', () => {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  }
+
+
 </script>
 </body>
 </html>
