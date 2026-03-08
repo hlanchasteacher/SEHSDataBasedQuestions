@@ -382,7 +382,7 @@
         Calculate the difference of mean standing broad jump fitness test score between moderate and high training levels for the group stated in 1(a)(i). Give your answer in cm.
       </div>
       <div class="text-input-wrap">
-        <input type="number" id="inp_q0_1" placeholder="e.g. 20" step="0.1"/>
+        <input type="number" id="inp_q0_1" placeholder="e.g. 42" step="0.1"/>
         <button class="submit-btn" onclick="checkNumeric('q0_1', [19,21], 'ex1_q1')">
           <span data-en="Submit" data-es="Enviar">Submit</span>
         </button>
@@ -399,13 +399,13 @@
       </div>
       <div class="mc-options">
         <label class="mc-option"><input type="radio" name="q0_2" value="A">
-          <span data-en="High training level leads to the same scores as moderate training" data-es="El entrenamiento alto lleva a las mismas puntuaciones que el moderado">High training level leads to the same scores as moderate training</span></label>
+          <span data-en="Training level has no effect on standing broad jump performance" data-es="El nivel de entrenamiento no tiene efecto en el rendimiento del salto de longitud">Training level has no effect on standing broad jump performance</span></label>
         <label class="mc-option"><input type="radio" name="q0_2" value="B">
-          <span data-en="High training level consistently leads to higher mean scores compared to low and moderate levels across sports" data-es="El entrenamiento alto lleva de forma consistente a puntuaciones medias más altas en comparación con los niveles bajo y moderado en todos los deportes">High training level consistently leads to higher mean scores compared to low and moderate levels across sports</span></label>
+          <span data-en="Children who regularly participate in sport perform better; gymnasts outperform other sports across all training levels; and higher training (&gt;5 h/week) leads to greater standing broad jump performance in every sport" data-es="Los niños que participan regularmente en deporte rinden mejor; los gimnastas superan a otros deportes en todos los niveles de entrenamiento; y un mayor entrenamiento (&gt;5 h/semana) conduce a un mayor rendimiento en el salto de longitud en todos los deportes">Children who regularly participate in sport perform better; gymnasts outperform other sports across all training levels; and higher training (&gt;5 h/week) leads to greater standing broad jump performance in every sport</span></label>
         <label class="mc-option"><input type="radio" name="q0_2" value="C">
-          <span data-en="High training level only improves performance in individual sports" data-es="El entrenamiento alto solo mejora el rendimiento en deportes individuales">High training level only improves performance in individual sports</span></label>
+          <span data-en="Only gymnasts benefit from high training; other sports show no improvement" data-es="Solo los gimnastas se benefician del entrenamiento alto; otros deportes no muestran mejora">Only gymnasts benefit from high training; other sports show no improvement</span></label>
         <label class="mc-option"><input type="radio" name="q0_2" value="D">
-          <span data-en="High training level decreases performance in team sports" data-es="El entrenamiento alto disminuye el rendimiento en deportes de equipo">High training level decreases performance in team sports</span></label>
+          <span data-en="Moderate training produces better results than high training across all sports" data-es="El entrenamiento moderado produce mejores resultados que el alto en todos los deportes">Moderate training produces better results than high training across all sports</span></label>
       </div>
       <button class="submit-btn" onclick="checkMC('q0_2','B','ex1_q2')">
         <span data-en="Submit" data-es="Enviar">Submit</span>
@@ -413,22 +413,22 @@
       <div class="feedback" id="fb_q0_2"></div>
     </div>
 
-    <!-- Q1 a.iv (t-test) -->
+    <!-- Q1 a.iii (t-test) -->
     <div class="question-card locked-q" id="q0_3">
-      <div class="q-label">a.iv <span class="q-marks">[3]</span></div>
+      <div class="q-label">a.iii <span class="q-marks">[3]</span></div>
       <div class="q-text" data-en="A two-tailed, unpaired t-test was conducted. Results: low vs moderate: p > 0.05; moderate vs high: p < 0.05; low vs high: p < 0.01. Comment on the meaning of the results from the t-test."
            data-es="Se realizó una prueba t bilateral no pareada. Resultados: bajo vs moderado: p > 0.05; moderado vs alto: p < 0.05; bajo vs alto: p < 0.01. Comenta el significado de los resultados.">
         A two-tailed, unpaired t-test was conducted. Results: low vs moderate: p &gt; 0.05; moderate vs high: p &lt; 0.05; low vs high: p &lt; 0.01. Comment on the meaning of the results from the t-test.
       </div>
       <div class="mc-options">
         <label class="mc-option"><input type="radio" name="q0_3" value="A">
-          <span data-en="All three comparisons show statistically significant differences" data-es="Las tres comparaciones muestran diferencias estadísticamente significativas">All three comparisons show statistically significant differences</span></label>
+          <span data-en="All three comparisons are statistically significant, meaning training level always makes a significant difference" data-es="Las tres comparaciones son estadísticamente significativas, lo que significa que el nivel de entrenamiento siempre marca una diferencia significativa">All three comparisons are statistically significant, meaning training level always makes a significant difference</span></label>
         <label class="mc-option"><input type="radio" name="q0_3" value="B">
-          <span data-en="Low vs moderate is not significant; moderate vs high and low vs high are significant, indicating that high training makes the biggest difference" data-es="Bajo vs moderado no es significativo; moderado vs alto y bajo vs alto sí lo son, lo que indica que el entrenamiento alto marca la mayor diferencia">Low vs moderate is not significant; moderate vs high and low vs high are significant, indicating that high training makes the biggest difference</span></label>
+          <span data-en="Low vs moderate: not significant (p &gt; 0.05), so no meaningful difference between these groups. Moderate vs high: significant (p &lt; 0.05), so these groups are significantly different. Low vs high: extremely significant (p &lt; 0.01), showing the greatest difference between training extremes" data-es="Bajo vs moderado: no significativo (p &gt; 0.05), sin diferencia significativa entre estos grupos. Moderado vs alto: significativo (p &lt; 0.05). Bajo vs alto: extremadamente significativo (p &lt; 0.01), la mayor diferencia entre los extremos de entrenamiento">Low vs moderate: not significant (p &gt; 0.05), so no meaningful difference between these groups. Moderate vs high: significant (p &lt; 0.05), so these groups are significantly different. Low vs high: extremely significant (p &lt; 0.01), showing the greatest difference between training extremes</span></label>
         <label class="mc-option"><input type="radio" name="q0_3" value="C">
-          <span data-en="None of the comparisons are statistically significant" data-es="Ninguna de las comparaciones es estadísticamente significativa">None of the comparisons are statistically significant</span></label>
+          <span data-en="None of the comparisons are statistically significant, so training level has no effect" data-es="Ninguna de las comparaciones es estadísticamente significativa, por lo que el nivel de entrenamiento no tiene efecto">None of the comparisons are statistically significant, so training level has no effect</span></label>
         <label class="mc-option"><input type="radio" name="q0_3" value="D">
-          <span data-en="Only the low vs high comparison is significant because p < 0.01, the others are not relevant" data-es="Solo la comparación bajo vs alto es significativa porque p < 0.01, las otras no son relevantes">Only the low vs high comparison is significant because p &lt; 0.01, the others are not relevant</span></label>
+          <span data-en="Only low vs high is significant; the moderate group is not relevant to the analysis" data-es="Solo bajo vs alto es significativo; el grupo moderado no es relevante para el análisis">Only low vs high is significant; the moderate group is not relevant to the analysis</span></label>
       </div>
       <button class="submit-btn" onclick="checkMC('q0_3','B','ex1_q3')">
         <span data-en="Submit" data-es="Enviar">Submit</span>
@@ -496,7 +496,7 @@
         Calculate the difference, in Newtons, between mean maximum impact force for dominant and non-dominant shoulders for players wearing pads.
       </div>
       <div class="text-input-wrap">
-        <input type="number" id="inp_q1_1" placeholder="e.g. 124" step="0.1"/>
+        <input type="number" id="inp_q1_1" placeholder="e.g. 42" step="0.1"/>
         <button class="submit-btn" onclick="checkNumeric('q1_1', [123, 125], 'ex2_q1')">
           <span data-en="Submit" data-es="Enviar">Submit</span>
         </button>
@@ -577,7 +577,7 @@
         State the mean percentage for successful passing by the fixed practice group in the pre-test competition.
       </div>
       <div class="text-input-wrap">
-        <input type="number" id="inp_q2_0" placeholder="e.g. 67.95" step="0.1"/>
+        <input type="number" id="inp_q2_0" placeholder="e.g. 42" step="0.1"/>
         <button class="submit-btn" onclick="checkNumeric('q2_0', [67.5, 68.5], 'ex3_q0')">
           <span data-en="Submit" data-es="Enviar">Submit</span>
         </button>
@@ -593,8 +593,8 @@
         Identify the practice group and skill with the highest mean percentage of successful post-test performances.
       </div>
       <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q2_1" value="A"> <span data-en="Game-based – Trapping" data-es="Basado en juego – Trapping">Game-based – Trapping</span></label>
-        <label class="mc-option"><input type="radio" name="q2_1" value="B"> <span data-en="Variable – Dribbling" data-es="Variable – Regate">Variable – Dribbling</span></label>
+        <label class="mc-option"><input type="radio" name="q2_1" value="A"> <span data-en="Variable – Dribbling" data-es="Variable – Regate">Variable – Dribbling</span></label>
+        <label class="mc-option"><input type="radio" name="q2_1" value="B"> <span data-en="Game-based – Trapping" data-es="Basado en juego – Trapping">Game-based – Trapping</span></label>
         <label class="mc-option"><input type="radio" name="q2_1" value="C"> <span data-en="Fixed – Dribbling" data-es="Fijo – Regate">Fixed – Dribbling</span></label>
         <label class="mc-option"><input type="radio" name="q2_1" value="D"> <span data-en="Game-based – Passing" data-es="Basado en juego – Pase">Game-based – Passing</span></label>
       </div>
@@ -612,7 +612,7 @@
         Calculate the difference in mean percentage between successful pre-test and post-test game-based trapping.
       </div>
       <div class="text-input-wrap">
-        <input type="number" id="inp_q2_2" placeholder="e.g. 17.50" step="0.1"/>
+        <input type="number" id="inp_q2_2" placeholder="e.g. 42" step="0.1"/>
         <button class="submit-btn" onclick="checkNumeric('q2_2', [17, 18], 'ex3_q2')">
           <span data-en="Submit" data-es="Enviar">Submit</span>
         </button>
@@ -629,15 +629,15 @@
       </div>
       <div class="mc-options">
         <label class="mc-option"><input type="radio" name="q2_3" value="A">
-          <span data-en="All three practice groups showed equal improvement in all skills" data-es="Los tres grupos mostraron mejoras iguales en todas las habilidades">All three practice groups showed equal improvement in all skills</span></label>
+          <span data-en="All groups improved equally; no differences in variability or skill type were observed" data-es="Todos los grupos mejoraron por igual; no se observaron diferencias en variabilidad ni tipo de habilidad">All groups improved equally; no differences in variability or skill type were observed</span></label>
         <label class="mc-option"><input type="radio" name="q2_3" value="B">
-          <span data-en="Fixed practice showed the greatest improvement; variable and game-based were less effective" data-es="La práctica fija mostró la mayor mejora; la variable y la basada en juego fueron menos eficaces">Fixed practice showed the greatest improvement; variable and game-based were less effective</span></label>
+          <span data-en="Variability reduced for all skills/groups post-test; trapping and passing improved significantly through variable and game-based practice (p&lt;0.05); shooting and dribbling appear more advanced skills and showed less consistent improvement" data-es="La variabilidad se redujo en todas las habilidades/grupos en el postest; el trapping y el pase mejoraron significativamente con la práctica variable y basada en juego (p&lt;0.05); el disparo y el regate parecen habilidades más avanzadas y mostraron mejoras menos consistentes">Variability reduced for all skills/groups post-test; trapping and passing improved significantly through variable and game-based practice (p&lt;0.05); shooting and dribbling appear more advanced skills and showed less consistent improvement</span></label>
         <label class="mc-option"><input type="radio" name="q2_3" value="C">
-          <span data-en="All groups improved post-test scores; game-based practice generally showed greatest improvement in passing and trapping; fixed and variable also improved skills but to varying degrees" data-es="Todos los grupos mejoraron las puntuaciones postest; la práctica basada en el juego mostró generalmente la mayor mejora en pase y trapping; la fija y variable también mejoraron aunque en menor medida">All groups improved post-test scores; game-based practice generally showed greatest improvement in passing and trapping; fixed and variable also improved skills but to varying degrees</span></label>
+          <span data-en="Only game-based practice improved trapping and passing significantly; fixed and variable had no effect on any skill" data-es="Solo la práctica basada en juego mejoró el trapping y el pase de forma significativa; la fija y variable no tuvieron efecto en ninguna habilidad">Only game-based practice improved trapping and passing significantly; fixed and variable had no effect on any skill</span></label>
         <label class="mc-option"><input type="radio" name="q2_3" value="D">
-          <span data-en="Only game-based practice improved any skill significantly" data-es="Solo la práctica basada en juego mejoró significativamente alguna habilidad">Only game-based practice improved any skill significantly</span></label>
+          <span data-en="Dribbling and shooting improved most across all practice groups, while trapping and passing showed little change" data-es="El regate y el disparo mejoraron más en todos los grupos, mientras que el trapping y el pase mostraron pocos cambios">Dribbling and shooting improved most across all practice groups, while trapping and passing showed little change</span></label>
       </div>
-      <button class="submit-btn" onclick="checkMC('q2_3','C','ex3_q3')">
+      <button class="submit-btn" onclick="checkMC('q2_3','B','ex3_q3')">
         <span data-en="Submit" data-es="Enviar">Submit</span>
       </button>
       <div class="feedback" id="fb_q2_3"></div>
@@ -679,10 +679,10 @@
         Identify the time and condition with the highest mean sprint speed.
       </div>
       <div class="mc-options">
-        <label class="mc-option"><input type="radio" name="q3_0" value="A"> <span data-en="Baseline – Control" data-es="Línea base – Control">Baseline – Control</span></label>
-        <label class="mc-option"><input type="radio" name="q3_0" value="B"> <span data-en="4 minutes – Plyometric" data-es="4 minutos – Pliométrico">4 minutes – Plyometric</span></label>
-        <label class="mc-option"><input type="radio" name="q3_0" value="C"> <span data-en="2 minutes – Plyometric" data-es="2 minutos – Pliométrico">2 minutes – Plyometric</span></label>
-        <label class="mc-option"><input type="radio" name="q3_0" value="D"> <span data-en="4 minutes – Control" data-es="4 minutos – Control">4 minutes – Control</span></label>
+        <label class="mc-option"><input type="radio" name="q3_0" value="A"> <span data-en="4 minutes – Plyometric" data-es="4 minutos – Pliométrico">4 minutes – Plyometric</span></label>
+        <label class="mc-option"><input type="radio" name="q3_0" value="B"> <span data-en="8 minutes – Plyometric" data-es="8 minutos – Pliométrico">8 minutes – Plyometric</span></label>
+        <label class="mc-option"><input type="radio" name="q3_0" value="C"> <span data-en="8 minutes – Control" data-es="8 minutos – Control">8 minutes – Control</span></label>
+        <label class="mc-option"><input type="radio" name="q3_0" value="D"> <span data-en="Baseline – Control" data-es="Línea base – Control">Baseline – Control</span></label>
       </div>
       <button class="submit-btn" onclick="checkMC('q3_0','B','ex4_q0')">
         <span data-en="Submit" data-es="Enviar">Submit</span>
@@ -693,12 +693,12 @@
     <!-- Q4 b -->
     <div class="question-card locked-q" id="q3_1">
       <div class="q-label">b <span class="q-marks">[2]</span></div>
-      <div class="q-text" data-en="Calculate the difference in mean sprint speed (m s⁻¹) between baseline and at 4 minutes for the plyometric condition."
-           data-es="Calcula la diferencia en la velocidad media de sprint (m s⁻¹) entre la línea base y los 4 minutos para la condición pliométrica.">
+      <div class="q-text" data-en="Calculate the difference in mean sprint speed (m s⁻¹) between baseline and at 8 minutes for the plyometric condition."
+           data-es="Calcula la diferencia en la velocidad media de sprint (m s⁻¹) entre la línea base y los 8 minutos para la condición pliométrica.">
         Calculate the difference in mean sprint speed (m s⁻¹) between baseline and at 4 minutes for the plyometric condition.
       </div>
       <div class="text-input-wrap">
-        <input type="number" id="inp_q3_1" placeholder="e.g. 0.20" step="0.01"/>
+        <input type="number" id="inp_q3_1" placeholder="e.g. 42" step="0.01"/>
         <button class="submit-btn" onclick="checkNumeric('q3_1', [0.17, 0.23], 'ex4_q1')">
           <span data-en="Submit" data-es="Enviar">Submit</span>
         </button>
@@ -715,13 +715,13 @@
       </div>
       <div class="mc-options">
         <label class="mc-option"><input type="radio" name="q3_2" value="A">
-          <span data-en="Data does not support the hypothesis as both conditions show the same sprint speeds" data-es="Los datos no apoyan la hipótesis ya que ambas condiciones muestran la misma velocidad de sprint">Data does not support the hypothesis as both conditions show the same sprint speeds</span></label>
+          <span data-en="Hypothesis is not supported: both conditions show the same sprint speeds throughout" data-es="La hipótesis no se apoya: ambas condiciones muestran la misma velocidad de sprint en todo momento">Hypothesis is not supported: both conditions show the same sprint speeds throughout</span></label>
         <label class="mc-option"><input type="radio" name="q3_2" value="B">
-          <span data-en="Data supports the hypothesis: plyometric condition shows higher mean sprint speed at 4 min (p < 0.05), while control shows no significant change (p > 0.05)" data-es="Los datos apoyan la hipótesis: la condición pliométrica muestra mayor velocidad media a los 4 min (p < 0.05), mientras que el control no muestra cambio significativo (p > 0.05)">Data supports the hypothesis: plyometric condition shows higher mean sprint speed at 4 min (p &lt; 0.05), while control shows no significant change (p &gt; 0.05)</span></label>
+          <span data-en="Hypothesis is supported: plyometric exercise improved performance (p &lt; 0.05 at 4 min); no improvement before 4 min; plyometric speed remained better than control up to 12 min, though less effective after 8 min" data-es="La hipótesis se apoya: el ejercicio pliométrico mejoró el rendimiento (p &lt; 0.05 a los 4 min); sin mejora antes de los 4 min; la velocidad pliométrica fue mayor que el control hasta los 12 min, aunque menos efectiva después de los 8 min">Hypothesis is supported: plyometric exercise improved performance (p &lt; 0.05 at 4 min); no improvement before 4 min; plyometric speed remained better than control up to 12 min, though less effective after 8 min</span></label>
         <label class="mc-option"><input type="radio" name="q3_2" value="C">
-          <span data-en="Control condition improves sprint speed more than plyometric condition" data-es="La condición de control mejora la velocidad de sprint más que la pliométrica">Control condition improves sprint speed more than plyometric condition</span></label>
+          <span data-en="Hypothesis is partially supported: plyometric exercise only improves performance immediately after exercise" data-es="La hipótesis se apoya parcialmente: el ejercicio pliométrico solo mejora el rendimiento inmediatamente después del ejercicio">Hypothesis is partially supported: plyometric exercise only improves performance immediately after exercise</span></label>
         <label class="mc-option"><input type="radio" name="q3_2" value="D">
-          <span data-en="Plyometric exercise only temporarily decreases sprint speed before increasing it" data-es="El ejercicio pliométrico solo disminuye temporalmente la velocidad de sprint antes de aumentarla">Plyometric exercise only temporarily decreases sprint speed before increasing it</span></label>
+          <span data-en="Hypothesis is not supported: the control condition shows higher sprint speeds than plyometric at all time points" data-es="La hipótesis no se apoya: la condición control muestra velocidades mayores que la pliométrica en todos los momentos">Hypothesis is not supported: the control condition shows higher sprint speeds than plyometric at all time points</span></label>
       </div>
       <button class="submit-btn" onclick="checkMC('q3_2','B','ex4_q2')">
         <span data-en="Submit" data-es="Enviar">Submit</span>
@@ -738,13 +738,13 @@
       </div>
       <div class="mc-options">
         <label class="mc-option"><input type="radio" name="q3_3" value="A">
-          <span data-en="The control is used to make the study more expensive and time-consuming" data-es="El control se usa para hacer el estudio más costoso y largo">The control is used to make the study more expensive and time-consuming</span></label>
+          <span data-en="The control condition increases the number of participants and reduces cost of the study" data-es="La condición de control aumenta el número de participantes y reduce el coste del estudio">The control condition increases the number of participants and reduces cost of the study</span></label>
         <label class="mc-option"><input type="radio" name="q3_3" value="B">
-          <span data-en="The control group provides a baseline comparison to isolate the effect of plyometric exercise and rule out other factors (e.g. fatigue, learning) that could affect sprint speed" data-es="El grupo de control proporciona una comparación de referencia para aislar el efecto del ejercicio pliométrico y descartar otros factores (p. ej. fatiga, aprendizaje) que podrían afectar la velocidad de sprint">The control group provides a baseline comparison to isolate the effect of plyometric exercise and rule out other factors (e.g. fatigue, learning) that could affect sprint speed</span></label>
+          <span data-en="The control provides a comparison point to show the effect of plyometric exercise vs walking only; allows one factor to be investigated while others are kept constant; and helps determine warm-up/fatigue effects, increasing internal validity" data-es="El control proporciona un punto de comparación para mostrar el efecto del ejercicio pliométrico frente a caminar; permite investigar un factor mientras los demás se mantienen constantes; y ayuda a determinar los efectos de calentamiento/fatiga, aumentando la validez interna">The control provides a comparison point to show the effect of plyometric exercise vs walking only; allows one factor to be investigated while others are kept constant; and helps determine warm-up/fatigue effects, increasing internal validity</span></label>
         <label class="mc-option"><input type="radio" name="q3_3" value="C">
-          <span data-en="The control is used to increase the number of participants in the study" data-es="El control se usa para aumentar el número de participantes del estudio">The control is used to increase the number of participants in the study</span></label>
+          <span data-en="The control condition is used to ensure participants perform the maximum number of sprints possible" data-es="La condición de control se usa para asegurar que los participantes realicen el máximo número de sprints posible">The control condition is used to ensure participants perform the maximum number of sprints possible</span></label>
         <label class="mc-option"><input type="radio" name="q3_3" value="D">
-          <span data-en="The control condition tests the effect of rest on sprint speed" data-es="La condición de control prueba el efecto del descanso en la velocidad de sprint">The control condition tests the effect of rest on sprint speed</span></label>
+          <span data-en="The control condition eliminates all confounding variables and guarantees the results are due to plyometric exercise alone" data-es="La condición de control elimina todas las variables de confusión y garantiza que los resultados se deben únicamente al ejercicio pliométrico">The control condition eliminates all confounding variables and guarantees the results are due to plyometric exercise alone</span></label>
       </div>
       <button class="submit-btn" onclick="checkMC('q3_3','B','ex4_q3')">
         <span data-en="Submit" data-es="Enviar">Submit</span>
