@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEHS Paper 1B - Práctica Interactiva Completa</title>
+    <title>SEHS Paper 1B - Interactive Practice</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,6 +14,22 @@
             padding: 20px;
             line-height: 1.6;
         }
+        .header-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .btn-lang {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-lang:hover { background-color: #555; }
+        
         .dataset-container, .sub-question {
             background: #fff;
             padding: 20px;
@@ -40,6 +56,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
+            margin-top: 10px;
         }
         .radio-group { margin: 10px 0; }
         .radio-label {
@@ -53,7 +70,7 @@
             border: 1px solid #ddd;
         }
         .radio-label:hover { background: #f1f1f1; }
-        button {
+        .btn-submit {
             padding: 10px 20px;
             background-color: #0056b3;
             color: white;
@@ -63,13 +80,346 @@
             font-size: 16px;
             margin-top: 10px;
         }
-        button:hover { background-color: #004494; }
-        button:disabled { background-color: #ccc; cursor: not-allowed; }
+        .btn-submit:hover { background-color: #004494; }
+        .btn-submit:disabled { background-color: #ccc; cursor: not-allowed; }
         .feedback { margin-top: 10px; font-weight: bold; }
         .success { color: green; }
         .error { color: red; }
+
+        /* Default Language display states */
+        .lang-en { display: none; }
+        .lang-es { display: block; }
+        span.lang-es, span.lang-en { display: inline; }
+        span.lang-en { display: none; }
     </style>
 </head>
-<body>
+<body data-lang="es">
 
-    <h1>SEHS Paper 1B: Análisis de Datos (4 Ej
+    <div class="header-controls">
+        <button class="btn-lang" onclick="toggleLanguage()" id="langToggleBtn">🇬🇧 Switch to English</button>
+    </div>
+
+    <h1 class="lang-es">SEHS Paper 1B: Análisis de Datos (4 Ejercicios)</h1>
+    <h1 class="lang-en">SEHS Paper 1B: Data Analysis (4 Exercises)</h1>
+    
+    <p class="lang-es">Responde correctamente a cada apartado para avanzar. ¡Presta atención a las unidades y la significancia estadística!</p>
+    <p class="lang-en">Answer each section correctly to advance. Pay attention to units and statistical significance!</p>
+
+    <div id="dataset1" class="dataset-container active">
+        <h2 class="lang-es">Ejercicio 1: Condición física en niños</h2>
+        <h2 class="lang-en">Exercise 1: Physical fitness in children</h2>
+        
+        <p class="lang-es">Estudio de la prueba de salto de longitud sin impulso en 900 niños de 10 años divididos por nivel de entrenamiento (Bajo, Moderado, Alto) y deporte.</p>
+        <p class="lang-en">Study of the standing broad jump fitness test in 900 10-year-old children divided by training level (Low, Moderate, High) and sport.</p>
+        
+        <div class="graph-placeholder lang-es">[Inserta Gráfico del Ejercicio 1: Barras de salto de longitud]</div>
+        <div class="graph-placeholder lang-en">[Insert Exercise 1 Graph: Broad jump bar chart]</div>
+
+        <div id="q1a" class="sub-question active">
+            <p class="lang-es"><strong>1.a.i.</strong> Identifica el nivel de entrenamiento y el deporte del grupo con la mayor puntuación media.</p>
+            <p class="lang-en"><strong>1.a.i.</strong> Identify the training level and sport for the group that has the highest mean score.</p>
+            
+            <input type="text" id="ans1a" placeholder="...">
+            <button class="btn-submit" onclick="checkText('ans1a', ['alto, gimnastas', 'gimnastas, alto', 'alto gimnastas', 'gimnastas alto', 'gimnastas', 'alto', 'high, gymnasts', 'gymnasts, high', 'high gymnasts', 'gymnasts high', 'high'], 'feedback1a', 'q1b')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback1a" class="feedback"></div>
+        </div>
+
+        <div id="q1b" class="sub-question">
+            <p class="lang-es"><strong>1.a.ii.</strong> Calcula la diferencia de puntuación media (en cm) entre moderado y alto para los gimnastas.</p>
+            <p class="lang-en"><strong>1.a.ii.</strong> Calculate the difference in mean score (in cm) between moderate and high training levels for gymnasts.</p>
+            
+            <input type="text" id="ans1b" placeholder="...">
+            <button class="btn-submit" onclick="checkText('ans1b', ['20', '20 cm', '20cm'], 'feedback1b', 'q1c')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback1b" class="feedback"></div>
+        </div>
+
+        <div id="q1c" class="sub-question">
+            <p class="lang-es"><strong>1.a.iv.</strong> La prueba t indicó: bajo vs moderado (p > 0.05), moderado vs alto (p < 0.05) y bajo vs alto (p < 0.01). ¿Qué significan estos resultados?</p>
+            <p class="lang-en"><strong>1.a.iv.</strong> The t-test yielded: low vs moderate (p > 0.05), moderate vs high (p < 0.05) and low vs high (p < 0.01). What do these results mean?</p>
+            
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="mc1" value="A"> 
+                    <span class="lang-es">A) Todas las diferencias entre niveles de entrenamiento son producto del azar.</span>
+                    <span class="lang-en">A) All differences between training levels are due to chance.</span>
+                </label>
+                <label class="radio-label"><input type="radio" name="mc1" value="B"> 
+                    <span class="lang-es">B) Hay diferencias significativas al comparar moderado-alto y bajo-alto, pero la diferencia entre nivel bajo y moderado no es significativa.</span>
+                    <span class="lang-en">B) There are significant differences when comparing moderate-high and low-high, but the difference between low and moderate is not statistically significant.</span>
+                </label>
+                <label class="radio-label"><input type="radio" name="mc1" value="C"> 
+                    <span class="lang-es">C) El nivel bajo garantiza peores resultados en el 95% de los casos frente al moderado.</span>
+                    <span class="lang-en">C) Low training level guarantees worse results in 95% of cases compared to moderate.</span>
+                </label>
+            </div>
+            <button class="btn-submit" onclick="checkRadio('mc1', 'B', 'feedback1c', 'dataset2')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback1c" class="feedback"></div>
+        </div>
+    </div>
+
+    <div id="dataset2" class="dataset-container">
+        <h2 class="lang-es">Ejercicio 2: Fuerza de impacto en Rugby</h2>
+        <h2 class="lang-en">Exercise 2: Impact force in Rugby union</h2>
+        
+        <p class="lang-es">Análisis de la fuerza de impacto (N) en el hombro durante placajes en función de hombreras, hombro dominante/no dominante y cascos con cubierta blanda.</p>
+        <p class="lang-en">Analysis of the impact force (N) at the shoulder during tackles based on shoulder pads, dominant/non-dominant shoulder, and soft-covering caps on helmets.</p>
+        
+        <div class="graph-placeholder lang-es">[Inserta Tablas 1, 2 y Gráfico de Cascos del Ejercicio 2]</div>
+        <div class="graph-placeholder lang-en">[Insert Tables 1, 2 and Helmet Graph for Exercise 2]</div>
+
+        <div id="q2a" class="sub-question active">
+            <p class="lang-es"><strong>2.a.i.</strong> Calcula la diferencia en Newtons entre el hombro dominante y no dominante para jugadores que <strong>SÍ</strong> llevan hombreras (Tabla 1).</p>
+            <p class="lang-en"><strong>2.a.i.</strong> Calculate the difference, in Newtons, between mean maximum impact force for dominant and non-dominant shoulders for players wearing pads (Table 1).</p>
+            
+            <input type="text" id="ans2a" placeholder="...">
+            <button class="btn-submit" onclick="checkText('ans2a', ['124', '124 n', '124n'], 'feedback2a', 'q2b')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback2a" class="feedback"></div>
+        </div>
+
+        <div id="q2b" class="sub-question">
+            <p class="lang-es"><strong>2.a.ii.</strong> Discute la hipótesis de que usar hombreras reduce la incidencia de lesiones para el placador.</p>
+            <p class="lang-en"><strong>2.a.ii.</strong> Discuss the hypothesis that wearing padding could reduce the incidence of injuries to the tackler.</p>
+            
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="mc2" value="A"> 
+                    <span class="lang-es">A) Falso, porque las hombreras aumentaron la fuerza de impacto en todos los casos.</span>
+                    <span class="lang-en">A) False, because shoulder pads increased the impact force in all cases.</span>
+                </label>
+                <label class="radio-label"><input type="radio" name="mc2" value="B"> 
+                    <span class="lang-es">B) Las hombreras reducen ligeramente la fuerza media, pero las altas desviaciones estándar sugieren que en muchos placajes la fuerza sigue siendo muy elevada, limitando la protección real.</span>
+                    <span class="lang-en">B) Pads slightly reduce mean force, but high standard deviations suggest that in many tackles the force remains very high, meaning protection may be limited.</span>
+                </label>
+            </div>
+            <button class="btn-submit" onclick="checkRadio('mc2', 'B', 'feedback2b', 'q2c')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback2b" class="feedback"></div>
+        </div>
+
+        <div id="q2c" class="sub-question">
+            <p class="lang-es"><strong>2.d.</strong> Deduce el efecto de añadir una cubierta blanda al casco (p > 0.05 para todas las marcas).</p>
+            <p class="lang-en"><strong>2.d.</strong> Deduce the effect of having a soft-covering cap on the impact force of the different helmets (p > 0.05 for all brands).</p>
+            
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="mc3" value="A"> 
+                    <span class="lang-es">A) Reduce ligeramente la fuerza media, pero como p > 0.05, esta reducción <strong>no</strong> es estadísticamente significativa.</span>
+                    <span class="lang-en">A) It slightly reduces mean force, but since p > 0.05, this reduction is <strong>not</strong> statistically significant.</span>
+                </label>
+                <label class="radio-label"><input type="radio" name="mc3" value="B"> 
+                    <span class="lang-es">B) Reduce la fuerza de impacto media de forma altamente significativa.</span>
+                    <span class="lang-en">B) It reduces the mean impact force in a highly significant manner.</span>
+                </label>
+            </div>
+            <button class="btn-submit" onclick="checkRadio('mc3', 'A', 'feedback2c', 'dataset3')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback2c" class="feedback"></div>
+        </div>
+    </div>
+
+    <div id="dataset3" class="dataset-container">
+        <h2 class="lang-es">Ejercicio 3: Entrenamiento de Hockey sobre hierba</h2>
+        <h2 class="lang-en">Exercise 3: Field hockey training</h2>
+        
+        <p class="lang-es">Un estudio investigó la mejora en 4 habilidades de hockey tras 6 semanas de entrenamiento en tres grupos: fijo, variable y basado en juego (game-based).</p>
+        <p class="lang-en">A study investigated the improvement of 4 field hockey skills after a 6-week training program across three practice groups: fixed, variable, and game-based.</p>
+        
+        <div class="graph-placeholder lang-es">[Inserta Tabla del Ejercicio 3: Habilidades de Hockey]</div>
+        <div class="graph-placeholder lang-en">[Insert Exercise 3 Table: Hockey Skills]</div>
+
+        <div id="q3a" class="sub-question active">
+            <p class="lang-es"><strong>3.a.ii.</strong> Identifica el grupo de práctica y la habilidad que logró el mayor porcentaje medio de éxito en el post-test.</p>
+            <p class="lang-en"><strong>3.a.ii.</strong> Identify the practice group and skill with the highest mean percentage of successful post-test performances.</p>
+            
+            <input type="text" id="ans3a" placeholder="...">
+            <button class="btn-submit" onclick="checkText('ans3a', ['variable, regate', 'regate, variable', 'variable regate', 'regate variable', 'dribbling', 'variable, dribbling', 'variable dribbling', 'dribbling variable'], 'feedback3a', 'q3b')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback3a" class="feedback"></div>
+        </div>
+
+        <div id="q3b" class="sub-question">
+            <p class="lang-es"><strong>3.a.iii.</strong> Calcula la diferencia porcentual entre el pre-test y post-test en "Trapping" (recepción) para el grupo basado en el juego (game-based).</p>
+            <p class="lang-en"><strong>3.a.iii.</strong> Calculate the difference in mean percentage between successful pre-test and post-test game-based trapping.</p>
+            
+            <input type="text" id="ans3b" placeholder="...">
+            <button class="btn-submit" onclick="checkText('ans3b', ['17.5', '17.50', '17.5%', '17,5'], 'feedback3b', 'q3c')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback3b" class="feedback"></div>
+        </div>
+
+        <div id="q3c" class="sub-question">
+            <p class="lang-es"><strong>3.b.</strong> Teniendo en cuenta los asteriscos (* p < 0.05), deduce el efecto de los grupos de práctica.</p>
+            <p class="lang-en"><strong>3.b.</strong> Taking into account the asterisks (* p < 0.05), deduce the effect of each practice group.</p>
+            
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="mc4" value="A"> 
+                    <span class="lang-es">A) La práctica fija mejora significativamente todas las habilidades.</span>
+                    <span class="lang-en">A) Fixed practice significantly improves all skills.</span>
+                </label>
+                <label class="radio-label"><input type="radio" name="mc4" value="B"> 
+                    <span class="lang-es">B) La práctica basada en juego mejoró significativamente el Pase y la Recepción (Trapping), mientras que Tiro y Regate no mostraron mejoras significativas con ningún método.</span>
+                    <span class="lang-en">B) Game-based practice significantly improved Passing and Trapping, while Shooting and Dribbling showed no significant improvement with any method.</span>
+                </label>
+            </div>
+            <button class="btn-submit" onclick="checkRadio('mc4', 'B', 'feedback3c', 'dataset4')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback3c" class="feedback"></div>
+        </div>
+    </div>
+
+    <div id="dataset4" class="dataset-container">
+        <h2 class="lang-es">Ejercicio 4: Pliometría y velocidad de sprint</h2>
+        <h2 class="lang-en">Exercise 4: Plyometrics and sprint speed</h2>
+        
+        <p class="lang-es">Efecto de un ejercicio pliométrico vs control (caminar) en la velocidad de sprint de 20m a lo largo del tiempo.</p>
+        <p class="lang-en">Effect of plyometric exercise vs control (walking) on 20m sprint speed over time.</p>
+        
+        <div class="graph-placeholder lang-es">[Inserta Gráfico del Ejercicio 4: Velocidad Pliometría vs Control]</div>
+        <div class="graph-placeholder lang-en">[Insert Exercise 4 Graph: Plyometric vs Control Speed]</div>
+
+        <div id="q4a" class="sub-question active">
+            <p class="lang-es"><strong>4.a.</strong> Identifica el tiempo (minutos) y la condición que produjo la mayor velocidad media de sprint.</p>
+            <p class="lang-en"><strong>4.a.</strong> Identify the time and condition with the highest mean sprint speed.</p>
+            
+            <input type="text" id="ans4a" placeholder="...">
+            <button class="btn-submit" onclick="checkText('ans4a', ['8 min, pliometric', '8 min pliometrico', '8 pliometrico', '8 min, pliometría', '8 min, plyometric', '8, plyometric', '8 plyometric', '8 min, plyometrics', '8, plyometrics'], 'feedback4a', 'q4b')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback4a" class="feedback"></div>
+        </div>
+
+        <div id="q4b" class="sub-question">
+            <p class="lang-es"><strong>4.b.</strong> Estima la diferencia de velocidad media (en m/s) entre la línea base y los 4 minutos en la condición pliométrica.</p>
+            <p class="lang-en"><strong>4.b.</strong> Calculate the difference in mean sprint speed (in m/s) between baseline and at 4 minutes for the plyometric condition.</p>
+            
+            <input type="text" id="ans4b" placeholder="...">
+            <button class="btn-submit" onclick="checkText('ans4b', ['0.2', '0.20', '0.2 m/s', '0,2'], 'feedback4b', 'q4c')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback4b" class="feedback"></div>
+        </div>
+
+        <div id="q4c" class="sub-question">
+            <p class="lang-es"><strong>4.c/d.</strong> La prueba T comparando 4 min vs baseline dio Pliometría p < 0.05 y Control p > 0.05. ¿Por qué se usó un grupo control y qué indica esto?</p>
+            <p class="lang-en"><strong>4.c/d.</strong> The t-test comparing 4 min vs baseline gave Plyometric p < 0.05 and Control p > 0.05. Why use a control group and what does this indicate?</p>
+            
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="mc5" value="A"> 
+                    <span class="lang-es">A) La pliometría mejora el sprint (potenciación post-activación). El control asegura que la mejora se debe al ejercicio y no al mero paso del tiempo o la práctica.</span>
+                    <span class="lang-en">A) Plyometrics improve sprint speed (post-activation potentiation). The control ensures the improvement is due to the exercise and not just the passage of time or practice.</span>
+                </label>
+                <label class="radio-label"><input type="radio" name="mc5" value="B"> 
+                    <span class="lang-es">B) El grupo control demuestra que caminar es mejor que saltar, ya que su p > 0.05 significa mayor velocidad.</span>
+                    <span class="lang-en">B) The control group proves walking is better than jumping, since p > 0.05 means higher speed.</span>
+                </label>
+            </div>
+            <button class="btn-submit" onclick="checkRadio('mc5', 'A', 'feedback4c', 'success')">
+                <span class="lang-es">Comprobar</span><span class="lang-en">Check</span>
+            </button>
+            <div id="feedback4c" class="feedback"></div>
+        </div>
+    </div>
+
+    <div id="success" class="dataset-container">
+        <h2 style="color: #28a745; text-align: center;" class="lang-es">🏆 ¡Prueba Completada!</h2>
+        <h2 style="color: #28a745; text-align: center;" class="lang-en">🏆 Practice Completed!</h2>
+        
+        <p style="text-align: center;" class="lang-es">Has finalizado con éxito el análisis de los 4 conjuntos de datos. ¡Estás listo para el examen!</p>
+        <p style="text-align: center;" class="lang-en">You have successfully analyzed all 4 datasets. You are ready for the exam!</p>
+    </div>
+
+    <script>
+        // Lógica de Cambio de Idioma
+        function toggleLanguage() {
+            const body = document.body;
+            const currentLang = body.getAttribute('data-lang');
+            const btn = document.getElementById('langToggleBtn');
+            const esElements = document.querySelectorAll('.lang-es');
+            const enElements = document.querySelectorAll('.lang-en');
+
+            if (currentLang === 'es') {
+                body.setAttribute('data-lang', 'en');
+                btn.textContent = '🇪🇸 Cambiar a Español';
+                esElements.forEach(el => el.style.display = 'none');
+                enElements.forEach(el => {
+                    if(el.tagName === 'SPAN') el.style.display = 'inline';
+                    else el.style.display = 'block';
+                });
+            } else {
+                body.setAttribute('data-lang', 'es');
+                btn.textContent = '🇬🇧 Switch to English';
+                enElements.forEach(el => el.style.display = 'none');
+                esElements.forEach(el => {
+                    if(el.tagName === 'SPAN') el.style.display = 'inline';
+                    else el.style.display = 'block';
+                });
+            }
+        }
+
+        // Validador Texto Corto
+        function checkText(inputId, correctAnswers, feedbackId, nextId) {
+            let userAnswer = document.getElementById(inputId).value.trim().toLowerCase();
+            userAnswer = userAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quitar acentos
+            
+            const isCorrect = correctAnswers.some(ans => userAnswer.includes(ans.normalize("NFD").replace(/[\u0300-\u036f]/g, "")));
+            const feedbackEl = document.getElementById(feedbackId);
+            const isEnglish = document.body.getAttribute('data-lang') === 'en';
+            
+            if (isCorrect) {
+                feedbackEl.textContent = isEnglish ? "Correct!" : "¡Correcto!";
+                feedbackEl.className = "feedback success";
+                document.getElementById(inputId).disabled = true;
+                event.target.disabled = true;
+                unlockNext(nextId);
+            } else {
+                feedbackEl.textContent = isEnglish ? "Incorrect. Check the data and units again." : "Incorrecto. Revisa las tablas/gráficos y las unidades.";
+                feedbackEl.className = "feedback error";
+            }
+        }
+
+        // Validador Opción Múltiple
+        function checkRadio(radioName, correctValue, feedbackId, nextId) {
+            const options = document.getElementsByName(radioName);
+            let selectedValue = null;
+            for (let opt of options) {
+                if (opt.checked) { selectedValue = opt.value; break; }
+            }
+
+            const feedbackEl = document.getElementById(feedbackId);
+            const isEnglish = document.body.getAttribute('data-lang') === 'en';
+            
+            if (selectedValue === correctValue) {
+                feedbackEl.textContent = isEnglish ? "Correct! Excellent deduction." : "¡Correcto! Excelente deducción.";
+                feedbackEl.className = "feedback success";
+                for (let opt of options) opt.disabled = true;
+                event.target.disabled = true;
+                unlockNext(nextId);
+            } else if (!selectedValue) {
+                feedbackEl.textContent = isEnglish ? "Please select an option." : "Por favor, selecciona una opción.";
+                feedbackEl.className = "feedback error";
+            } else {
+                feedbackEl.textContent = isEnglish ? "Incorrect. Read the p-values and trends carefully." : "Incorrecto. Relee detenidamente los valores p y tendencias.";
+                feedbackEl.className = "feedback error";
+            }
+        }
+
+        function unlockNext(nextId) {
+            const nextEl = document.getElementById(nextId);
+            if (nextEl) {
+                nextEl.classList.add('active');
+                nextEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    </script>
+</body>
+</html>
